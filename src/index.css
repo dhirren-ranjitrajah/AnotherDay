@@ -10,11 +10,24 @@
   --color-surface-dark: var(--color-stone-800);
   --color-surface-light: var(--color-stone-200);
   --color-border: var(--color-stone-900);
+
   --color-primary: var(--color-blue-500);
+  --color-primary-hover: var(--color-blue-400);
+
+  --color-priority: var(--color-red-500);
+  --color-category: var(--color-yellow-500);
 }
 
 @layer base {
-  h1, h2, h3, body {
-    @apply text-surface-light
+  h1,
+  h2,
+  h3,
+  body,
+  button {
+    @apply text-surface-light;
+  }
+
+  button {
+    @apply bg-primary hover:bg-primary-hover transition-colors;
   }
 }
