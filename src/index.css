@@ -7,8 +7,9 @@
 
   /* TODO ADJUST THESE COLOURS */
   --color-background: #000000;
-  --color-background-raised: #333333;
-  --color-background-border: #222222;
+  --color-surface-dark: #333333;
+  --color-surface-light: #CCCCCC;
+  --color-border: #222222;
   --color-primary: #0000ff;
 }
 

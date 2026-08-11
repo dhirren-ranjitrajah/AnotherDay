@@ -1,6 +1,6 @@
 function BacklogPage() {
   return (
-    <section>
+    <section className="bg-background">
       <h1>Backlog</h1>
     </section>
   )
