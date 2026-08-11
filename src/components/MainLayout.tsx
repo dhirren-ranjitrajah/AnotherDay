@@ -1,7 +1,7 @@
 import { Outlet } from 'react-router-dom'
 import Navbar from './Navbar'
 
-function MainLayout() {
+export default function MainLayout() {
   return (
     <div className="flex h-screen flex-col bg-background">
       <Navbar />
@@ -11,5 +11,3 @@ function MainLayout() {
     </div>
   )
 }
-
-export default MainLayout

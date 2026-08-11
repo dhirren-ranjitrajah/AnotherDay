@@ -3,7 +3,7 @@ import MainLayout from './components/MainLayout'
 import TodayPage from './pages/TodayPage'
 import BacklogPage from './pages/BacklogPage'
 
-function App() {
+export default function App() {
   return (
     <HashRouter>
       <Routes>
@@ -15,5 +15,3 @@ function App() {
     </HashRouter>
   )
 }
-
-export default App
