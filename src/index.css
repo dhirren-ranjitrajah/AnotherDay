@@ -6,13 +6,15 @@
   /* TODO - font? */
 
   /* TODO ADJUST THESE COLOURS */
-  --color-background: #000000;
-  --color-surface-dark: #333333;
-  --color-surface-light: #CCCCCC;
-  --color-border: #222222;
-  --color-primary: #0000ff;
+  --color-background: var(--color-stone-950);
+  --color-surface-dark: var(--color-stone-800);
+  --color-surface-light: var(--color-stone-200);
+  --color-border: var(--color-stone-900);
+  --color-primary: var(--color-blue-500);
 }
 
 @layer base {
-  
+  h1, h2, h3, body {
+    @apply text-surface-light
+  }
 }
