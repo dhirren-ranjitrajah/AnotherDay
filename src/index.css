@@ -6,16 +6,22 @@
   /* TODO - font? */
 
   /* TODO ADJUST THESE COLOURS */
-  --color-background: var(--color-stone-950);
-  --color-surface-dark: var(--color-stone-800);
-  --color-surface-light: var(--color-stone-200);
-  --color-border: var(--color-stone-900);
+  --color-background: #111111;
+  --color-background-raised: #222222;
+  --color-background-lowered: #050505;
 
-  --color-primary: var(--color-blue-500);
-  --color-primary-hover: var(--color-blue-400);
+  --color-text: #e5e5e5;
 
-  --color-priority: var(--color-red-500);
-  --color-category: var(--color-yellow-500);
+  --color-primary: #d1a2dc;
+  --color-primary-hover: #e5cbeb;
+
+  --color-priority-0: #bd6f6f;
+  --color-priority-1: #bdb16f;
+  --color-priority-2: #6fbd76;
+
+  --color-category-0: #6fbdb5;
+  --color-category-1: #6f85bd;
+  --color-category-2: #8c6fbd;
 }
 
 @layer base {
@@ -23,11 +29,20 @@
   h2,
   h3,
   body,
+  div,
   button {
-    @apply text-surface-light;
+    @apply text-text transition-all duration-300;
   }
 
-  button {
-    @apply bg-primary hover:bg-primary-hover transition-colors;
+  h1 {
+    @apply text-3xl font-bold;
+  }
+
+  h2 {
+    @apply text-2xl font-semibold;
+  }
+
+  h3 {
+    @apply text-xl font-semibold;
   }
 }
