@@ -43,7 +43,7 @@ export default function TaskRow({
         </button>
         <button
           type="button"
-          className="flex items-center justify-center w-12 h-8 rounded-md bg-primary hover:bg-primary-hover transition-colors text-background"
+          className="flex items-center justify-center w-12 h-8 rounded-md bg-primary hover:bg-primary-hover transition-colors text-background-lowered"
         >
           <CheckIcon className="w-8 h-8" />
         </button>

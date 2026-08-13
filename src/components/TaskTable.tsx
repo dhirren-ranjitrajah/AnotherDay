@@ -1,4 +1,5 @@
 import type TaskData from "../types/TaskData";
+import ProgressBar from "./ProgressBar";
 import TaskRow from "./TaskRow";
 
 interface Props {
@@ -12,6 +13,10 @@ export default function TaskTable({
   tasks,
   isTodayTable = false,
 }: Props) {
+  const totalProgress = tasks.reduce(
+    (sum, task) => sum + (task.estimate !== undefined ? task.progress || 0 : 0),
+    0,
+  );
   const totalEstimate = tasks.reduce(
     (sum, task) => sum + (task.estimate || 0),
     0,
@@ -21,9 +26,10 @@ export default function TaskTable({
     <div className="w-full flex flex-col">
       <div className="flex flex-row items-center justify-between mx-8 py-2 border-y border-primary mt-2">
         <h2 className="text-primary px-4">{tableHeader}</h2>
-        <p className="text-primary pr-34">
-          Remaining Estimate: {totalEstimate}m
-        </p>
+        <div className="flex flex-row items-center gap-4 text-primary pr-34">
+          <ProgressBar progress={totalProgress} max={totalEstimate} />
+          <p>{totalEstimate}m</p>
+        </div>
       </div>
       {tasks.map((task) => (
         <TaskRow key={task.id} task={task} isTodayTable={isTodayTable} />
