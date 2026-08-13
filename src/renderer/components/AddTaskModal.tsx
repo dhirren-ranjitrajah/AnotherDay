@@ -15,9 +15,9 @@ export default function AddTaskModal({ onClose }: Props) {
   const { addTask } = useTasks();
   const [taskInput, setTaskInput] = useState<TaskInput>({
     title: "",
-    priority: "",
-    category: "",
     estimate: undefined,
+    priority: undefined,
+    category: undefined,
     progress: undefined,
     isToday: location.pathname === "/",
     isCompleted: false,
