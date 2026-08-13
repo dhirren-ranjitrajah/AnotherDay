@@ -46,3 +46,26 @@
     @apply text-xl font-semibold;
   }
 }
+
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .styled-scrollbar::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  .styled-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .styled-scrollbar::-webkit-scrollbar-thumb {
+    background-color: var(--color-background-raised);
+    border-radius: 9999px;
+  }
+
+  .styled-scrollbar::-webkit-scrollbar-thumb:hover {
+    background-color: var(--color-primary);
+  }
+}

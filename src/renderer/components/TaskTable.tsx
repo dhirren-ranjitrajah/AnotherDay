@@ -1,4 +1,5 @@
 import type TaskDto from "../../types/taskDto";
+import { durationAsString } from "../utilities/durationStringParser";
 import ProgressBar from "./ProgressBar";
 import TaskRow from "./TaskRow";
 
@@ -30,9 +31,9 @@ export default function TaskTable({
     <div className="w-full flex flex-col">
       <div className="flex flex-row items-center justify-between mx-8 py-2 border-y border-primary mt-2">
         <h2 className="text-primary px-4">{tableHeader}</h2>
-        <div className="flex flex-row items-center gap-4 text-primary pr-34">
+        <div className="flex flex-row items-center gap-4 text-primary">
           <ProgressBar progress={totalProgress} max={totalEstimate} />
-          <p>{totalEstimate}m</p>
+          <p>{durationAsString(totalEstimate)}</p>
         </div>
       </div>
       {tasks.map((task) => (

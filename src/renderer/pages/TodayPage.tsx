@@ -6,7 +6,7 @@ function TodayPage() {
 
   if (isLoading) return null;
 
-  const todayTasks = tasks.filter((task) => task.isToday);
+  const todayTasks = tasks.filter((task) => task.isToday && !task.isCompleted);
 
   return (
     <section className="bg-background">

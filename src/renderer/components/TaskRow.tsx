@@ -4,6 +4,7 @@ import ProgressBar from "./ProgressBar";
 import ChevronsDownIcon from "../../assets/icons/chevrons-down.svg?react";
 import ChevronsUpIcon from "../../assets/icons/chevrons-up.svg?react";
 import CheckIcon from "../../assets/icons/check.svg?react";
+import { durationAsString } from "../utilities/durationStringParser";
 
 interface Props {
   task: TaskDto;
@@ -25,9 +26,10 @@ export default function TaskRow({
       <p className="flex-1">{title}</p>
       {estimate !== undefined && estimate > 0 && (
         <div className="flex flex-row gap-4 px-8 items-center">
-          {/* TODO - add time tracking functionality */}
           <ProgressBar progress={progress || 0} max={estimate} />
-          <p>{estimate}m</p>
+          <p className="min-w-16 w-16 text-center truncate group-hover:w-auto">
+            {durationAsString(estimate)}
+          </p>
         </div>
       )}
       <div className="opacity-0 group-hover:opacity-100 flex flex-row gap-2 transition-opacity">

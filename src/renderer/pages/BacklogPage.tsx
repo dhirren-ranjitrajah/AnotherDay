@@ -6,8 +6,10 @@ export default function BacklogPage() {
 
   if (isLoading) return null;
 
-  const todayTasks = tasks.filter((task) => task.isToday);
-  const backlogTasks = tasks.filter((task) => !task.isToday);
+  const todayTasks = tasks.filter((task) => task.isToday && !task.isCompleted);
+  const backlogTasks = tasks.filter(
+    (task) => !task.isToday && !task.isCompleted,
+  );
 
   return (
     <section className="bg-background">
