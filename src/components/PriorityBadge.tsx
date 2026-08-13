@@ -3,13 +3,20 @@ export default function PriorityBadge({
 }: {
   priority: string | undefined;
 }) {
-  if (!priority) {
-    return null;
+  let bgClass = "";
+
+  // TODO - priority should switch on value
+  if (priority !== undefined) {
+    bgClass = "bg-priority-0";
   }
 
   return (
-    <div className="px-2 py-1 rounded-md bg-priority">
-      {priority.trim().substring(0, 4).toLowerCase()}
+    <div
+      className={`group/priority flex justify-center w-2 h-8 rounded-[2px] ${bgClass} hover:w-16 items-center`}
+    >
+      <p className="opacity-0 text-center group-hover/priority:delay-100 group-hover/priority:opacity-100 duration-200 text-background">
+        {priority?.toLowerCase()}
+      </p>
     </div>
   );
 }

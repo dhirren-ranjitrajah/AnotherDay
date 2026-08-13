@@ -1,28 +1,53 @@
 import type TaskData from "../types/TaskData";
 import PriorityBadge from "./PriorityBadge";
+import ProgressBar from "./ProgressBar";
+import ChevronsDownIcon from "../assets/icons/chevrons-down.svg?react";
+import ChevronsUpIcon from "../assets/icons/chevrons-up.svg?react";
+import CheckIcon from "../assets/icons/check.svg?react";
+
+interface Props {
+  task: TaskData;
+  onTransferClick?: (taskId: number) => void;
+  onCompleteClick?: (taskId: number) => void;
+  isTodayTable?: boolean;
+}
 
 export default function TaskRow({
-  title,
-  estimate,
-  priority,
-  category,
-}: TaskData) {
+  task,
+  onTransferClick,
+  onCompleteClick,
+  isTodayTable = false,
+}: Props) {
+  const { id, title, estimate, progress, priority, category } = task;
   return (
-    <div className="w-full flex flex-row gap-4 px-4 py-2 bg-surface-dark items-center">
+    <div className="w-full group flex flex-row gap-4 items-center px-4 py-3 bg-background hover:bg-background-raised">
       <PriorityBadge priority={priority} />
       <p className="flex-1">{title}</p>
       {estimate !== undefined && estimate > 0 && (
-        <div className="flex flex-row gap-2 px-8">
+        <div className="flex flex-row gap-4 px-8 items-center">
           {/* TODO - add time tracking functionality */}
+          <ProgressBar progress={progress || 0} max={estimate} />
           <p>{estimate}m</p>
         </div>
       )}
-      <button type="button" className="px-4 py-1 rounded-md">
-        \/
-      </button>
-      <button type="button" className="px-4 py-1 rounded-md">
-        /
-      </button>
+      <div className="opacity-0 group-hover:opacity-100 flex flex-row gap-2 transition-opacity">
+        <button
+          type="button"
+          className="flex items-center justify-center w-12 h-8 rounded-md outline outline-1 outline-primary text-primary hover:outline-primary-hover hover:text-primary-hover transition-colors"
+        >
+          {isTodayTable ? (
+            <ChevronsDownIcon className="w-8 h-8" />
+          ) : (
+            <ChevronsUpIcon className="w-8 h-8" />
+          )}
+        </button>
+        <button
+          type="button"
+          className="flex items-center justify-center w-12 h-8 rounded-md bg-primary hover:bg-primary-hover transition-colors text-background"
+        >
+          <CheckIcon className="w-8 h-8" />
+        </button>
+      </div>
     </div>
   );
 }

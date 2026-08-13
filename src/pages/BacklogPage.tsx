@@ -6,6 +6,7 @@ export default function BacklogPage() {
     id: 0,
     title: "Task 1",
     estimate: 30,
+    progress: 15,
     isCompleted: false,
     priority: "High",
     category: "Development",
@@ -13,10 +14,11 @@ export default function BacklogPage() {
 
   let mockTaskTwo: TaskData = {
     id: 1,
-    title: "Task 2",
+    title: "Task 2: This is an example task with an extended description",
     estimate: 60,
+    progress: 15,
     isCompleted: false,
-    priority: "Medium",
+    priority: undefined,
     category: "Testing",
   };
 
@@ -24,6 +26,7 @@ export default function BacklogPage() {
     id: 2,
     title: "Task 3",
     estimate: undefined,
+    progress: undefined,
     isCompleted: false,
     priority: undefined,
     category: undefined,
@@ -33,6 +36,7 @@ export default function BacklogPage() {
     id: 4,
     title: "Task 4",
     estimate: 0,
+    progress: undefined,
     isCompleted: false,
     priority: "Low",
     category: undefined,
@@ -40,8 +44,13 @@ export default function BacklogPage() {
 
   return (
     <section className="bg-background">
-      <h1>Backlog</h1>
       <TaskTable
+        tableHeader="Today"
+        tasks={[mockTaskOne, mockTaskTwo, mockTaskThree, mockTaskFour]}
+        isTodayTable={true}
+      />
+      <TaskTable
+        tableHeader="Backlog"
         tasks={[mockTaskOne, mockTaskTwo, mockTaskThree, mockTaskFour]}
       />
     </section>
