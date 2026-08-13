@@ -23,7 +23,7 @@ export default function TaskRow({
   return (
     <div className="w-full group flex flex-row gap-4 items-center px-4 py-3 bg-background hover:bg-background-raised">
       <PriorityBadge priority={priority} />
-      <p className="flex-1">{title}</p>
+      <p className="flex-1 line-clamp-1 group-hover:line-clamp-none">{title}</p>
       {estimate !== undefined && estimate > 0 && (
         <div className="flex flex-row gap-4 px-8 items-center">
           <ProgressBar progress={progress || 0} max={estimate} />
