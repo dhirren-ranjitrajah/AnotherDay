@@ -67,18 +67,20 @@ export default function AddTaskModal({ onClose }: Props) {
 
   return (
     <Modal onClose={onClose}>
-      <div className="flex flex-row gap-4 px-32">
+      <div className="flex flex-row w-full gap-4 px-32">
         <StyledInput
-          label="Title"
+          label="Task"
           value={taskInput.title}
           onChange={handleTitleChange}
           autoFocus={true}
         />
-        <StyledInput
-          label="Estimate"
-          value={estimateStr}
-          onChange={handleEstimateChange}
-        />
+        <div className="w-32">
+          <StyledInput
+            label="Estimate"
+            value={estimateStr}
+            onChange={handleEstimateChange}
+          />
+        </div>
       </div>
     </Modal>
   );
