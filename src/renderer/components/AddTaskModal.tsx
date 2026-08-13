@@ -1,14 +1,17 @@
+import { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import useTasks from "../hooks/useTasks";
 import type { TaskInput } from "../../types/electron";
 import Modal from "./Modal";
 import StyledInput from "./StyledInput";
-import { useState, useEffect } from "react";
+import { parseDuration } from "../utilities/durationStringParser";
 
 interface Props {
   onClose: () => void;
 }
 
 export default function AddTaskModal({ onClose }: Props) {
+  const location = useLocation();
   const { addTask } = useTasks();
   const [taskInput, setTaskInput] = useState<TaskInput>({
     title: "",
@@ -16,7 +19,7 @@ export default function AddTaskModal({ onClose }: Props) {
     category: "",
     estimate: undefined,
     progress: undefined,
-    isToday: false,
+    isToday: location.pathname === "/",
     isCompleted: false,
   });
 
@@ -32,29 +35,7 @@ export default function AddTaskModal({ onClose }: Props) {
     let estimate = 0;
 
     // m, h, d
-    e.target.value
-      .trim()
-      .replaceAll(" ", "")
-      .split(/(?<=[mhd])/)
-      .forEach((part) => {
-        const unit = part.slice(-1);
-        const value = parseInt(part.slice(0, -1));
-        if (isNaN(value)) return;
-        switch (unit) {
-          case "m":
-            estimate += value;
-            break;
-          case "h":
-            estimate += value * 60;
-            break;
-          case "d":
-            estimate += value * 60 * 8; // 8h workday
-            break;
-          default:
-            break;
-        }
-      });
-
+    estimate = parseDuration(e.target.value);
     setTaskInput({
       ...taskInput,
       estimate: isNaN(estimate) ? undefined : estimate,
