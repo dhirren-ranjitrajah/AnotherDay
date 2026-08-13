@@ -1,4 +1,4 @@
-import type TaskDto from "./TaskDto";
+import type TaskDto from "./taskDto";
 
 export type TaskInput = Omit<TaskDto, "id">;
 

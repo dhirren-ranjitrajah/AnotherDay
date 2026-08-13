@@ -1,6 +1,6 @@
 import { contextBridge, ipcRenderer } from "electron";
-import type TaskDto from "../types/TaskDto";
-import type { TaskInput } from "../main/database/api/TaskApi";
+import type TaskDto from "../types/taskDto";
+import type { TaskInput } from "../main/database/api/taskApi";
 
 contextBridge.exposeInMainWorld("electron", {
   tasks: {
