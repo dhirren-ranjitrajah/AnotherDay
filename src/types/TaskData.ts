@@ -8,4 +8,6 @@ export default interface TaskData {
   // user defined strings; check validity at run-time
   priority: string | undefined;
   category: string | undefined;
+
+  isToday: boolean;
 }

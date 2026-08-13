@@ -10,6 +10,7 @@ export default function BacklogPage() {
     isCompleted: false,
     priority: "High",
     category: "Development",
+    isToday: false,
   };
 
   let mockTaskTwo: TaskData = {
@@ -20,6 +21,7 @@ export default function BacklogPage() {
     isCompleted: false,
     priority: undefined,
     category: "Testing",
+    isToday: false,
   };
 
   let mockTaskThree: TaskData = {
@@ -30,6 +32,7 @@ export default function BacklogPage() {
     isCompleted: false,
     priority: undefined,
     category: undefined,
+    isToday: false,
   };
 
   let mockTaskFour: TaskData = {
@@ -40,6 +43,7 @@ export default function BacklogPage() {
     isCompleted: false,
     priority: "Low",
     category: undefined,
+    isToday: false,
   };
 
   return (
