@@ -18,11 +18,12 @@ export default function TaskTable({
   onTransferClick,
   onCompleteClick,
 }: Props) {
-  const totalProgress = tasks.reduce(
+  const incompleteTasks = tasks.filter((t) => !t.isCompleted);
+  const totalProgress = incompleteTasks.reduce(
     (sum, task) => sum + (task.estimate !== undefined ? task.progress || 0 : 0),
     0,
   );
-  const totalEstimate = tasks.reduce(
+  const totalEstimate = incompleteTasks.reduce(
     (sum, task) => sum + (task.estimate || 0),
     0,
   );
@@ -36,7 +37,7 @@ export default function TaskTable({
           <p>{durationAsString(totalEstimate)}</p>
         </div>
       </div>
-      {tasks.map((task) => (
+      {incompleteTasks.map((task) => (
         <TaskRow
           key={task.id}
           task={task}
