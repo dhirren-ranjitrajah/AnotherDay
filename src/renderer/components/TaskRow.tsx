@@ -1,4 +1,4 @@
-import type TaskDto from "../../types/TaskDto";
+import type TaskDto from "../../types/taskDto";
 import PriorityBadge from "./PriorityBadge";
 import ProgressBar from "./ProgressBar";
 import ChevronsDownIcon from "../../assets/icons/chevrons-down.svg?react";

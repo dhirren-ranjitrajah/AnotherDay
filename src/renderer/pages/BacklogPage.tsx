@@ -1,5 +1,5 @@
 import TaskTable from "../components/TaskTable";
-import { useTasks } from "../hooks/useTasks";
+import useTasks from "../hooks/useTasks";
 
 export default function BacklogPage() {
   const { tasks, isLoading, toggleToday, toggleCompleted } = useTasks();

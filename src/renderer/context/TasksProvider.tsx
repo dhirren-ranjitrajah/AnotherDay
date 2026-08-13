@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState, type ReactNode } from "react";
-import type TaskDto from "../../types/TaskDto";
+import type TaskDto from "../../types/taskDto";
 import type { TaskInput } from "../../types/electron";
 import { TasksContext } from "./tasksContext";
 

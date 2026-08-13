@@ -1,8 +1,8 @@
-import { HashRouter, Route, Routes } from 'react-router-dom'
-import MainLayout from './components/MainLayout'
-import TodayPage from './pages/TodayPage'
-import BacklogPage from './pages/BacklogPage'
-import { TasksProvider } from './context/TasksContext'
+import { HashRouter, Route, Routes } from "react-router-dom";
+import MainLayout from "./components/MainLayout";
+import TodayPage from "./pages/TodayPage";
+import BacklogPage from "./pages/BacklogPage";
+import { TasksProvider } from "./context/TasksProvider";
 
 export default function App() {
   return (
@@ -16,5 +16,5 @@ export default function App() {
         </Routes>
       </HashRouter>
     </TasksProvider>
-  )
+  );
 }

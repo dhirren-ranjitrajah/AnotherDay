@@ -1,4 +1,4 @@
-import type TaskDto from "../../types/TaskDto";
+import type TaskDto from "../../types/taskDto";
 import ProgressBar from "./ProgressBar";
 import TaskRow from "./TaskRow";
 
