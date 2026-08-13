@@ -1,5 +1,5 @@
 import getDb from "../connection";
-import type TaskDto from "../../../types/TaskDto";
+import type TaskDto from "../../../types/taskDto";
 import type Task from "../model/Task";
 
 export type TaskInput = Omit<TaskDto, "id">;
