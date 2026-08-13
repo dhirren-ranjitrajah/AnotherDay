@@ -7,6 +7,9 @@ export default function MainLayout() {
   const [isTaskModalOpen, setIsTaskModalOpen] = useState(false);
 
   window.addEventListener("keydown", (e) => {
+    if (e.ctrlKey || e.altKey || e.metaKey) {
+      return;
+    }
     if (/^[a-zA-Z0-9]$/.test(e.key)) {
       setIsTaskModalOpen(true);
     }
