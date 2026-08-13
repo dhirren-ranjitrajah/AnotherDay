@@ -7,7 +7,7 @@ export default function Navbar() {
   const navLinkTextClass =
     "invisible opacity-0 group-hover:visible group-hover:opacity-100 group-hover:delay-100 group-hover:duration-400 group-hover/navlink:delay-0 group-hover/navlink:duration-200 group-hover/navlink:text-primary-hover";
   const iconClass =
-    "min-w-8 min-h-8 w-8 h-8 transition-colors  group-hover/navlink:text-primary-hover group-hover/navlink:duration-200";
+    "min-w-8 min-h-8 w-8 h-8 transition-colors group-hover/navlink:text-primary-hover group-hover/navlink:duration-200";
 
   return (
     <div className="group top-0 left-0 bottom-0 z-10 w-16 hover:w-32 transition-all duration-400">
