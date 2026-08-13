@@ -62,7 +62,6 @@
 
   .styled-scrollbar::-webkit-scrollbar-thumb {
     background-color: var(--color-background-raised);
-    border-radius: 9999px;
   }
 
   .styled-scrollbar::-webkit-scrollbar-thumb:hover {
