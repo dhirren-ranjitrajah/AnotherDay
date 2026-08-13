@@ -7,7 +7,7 @@ import {
   updateTask,
   deleteTask,
   type TaskInput,
-} from "./database/connection";
+} from "./database/api/TaskApi";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 

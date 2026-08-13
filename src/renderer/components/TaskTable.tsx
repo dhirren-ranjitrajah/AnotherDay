@@ -1,10 +1,10 @@
-import type TaskData from "../types/TaskData";
+import type TaskDto from "../../types/TaskDto";
 import ProgressBar from "./ProgressBar";
 import TaskRow from "./TaskRow";
 
 interface Props {
   tableHeader: string;
-  tasks: TaskData[];
+  tasks: TaskDto[];
   isTodayTable?: boolean;
   onTransferClick?: (taskId: number) => void;
   onCompleteClick?: (taskId: number) => void;

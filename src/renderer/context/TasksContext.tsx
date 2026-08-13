@@ -1,10 +1,10 @@
 import { useCallback, useEffect, useState, type ReactNode } from "react";
-import type TaskData from "../types/TaskData";
-import type { TaskInput } from "../types/electron";
+import type TaskDto from "../../types/TaskDto";
+import type { TaskInput } from "../../types/electron";
 import { TasksContext } from "./tasksContext";
 
 export function TasksProvider({ children }: { children: ReactNode }) {
-  const [tasks, setTasks] = useState<TaskData[]>([]);
+  const [tasks, setTasks] = useState<TaskDto[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {

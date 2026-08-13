@@ -1,13 +1,13 @@
-import type TaskData from "./TaskData";
+import type TaskDto from "./TaskDto";
 
-export type TaskInput = Omit<TaskData, "id">;
+export type TaskInput = Omit<TaskDto, "id">;
 
 declare global {
   interface Window {
     electron: {
       tasks: {
-        getAll: () => Promise<TaskData[]>;
-        create: (task: TaskInput) => Promise<TaskData>;
+        getAll: () => Promise<TaskDto[]>;
+        create: (task: TaskInput) => Promise<TaskDto>;
         update: (id: number, changes: Partial<TaskInput>) => Promise<void>;
         delete: (id: number) => Promise<void>;
       };

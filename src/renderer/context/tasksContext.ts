@@ -1,9 +1,9 @@
 import { createContext } from "react";
-import type TaskData from "../types/TaskData";
-import type { TaskInput } from "../types/electron";
+import type TaskDto from "../../types/TaskDto";
+import type { TaskInput } from "../../types/electron";
 
 export interface TasksContextValue {
-  tasks: TaskData[];
+  tasks: TaskDto[];
   isLoading: boolean;
   addTask: (task: TaskInput) => Promise<void>;
   updateTask: (id: number, changes: Partial<TaskInput>) => Promise<void>;

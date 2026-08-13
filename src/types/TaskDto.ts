@@ -1,4 +1,4 @@
-export default interface TaskData {
+export default interface TaskDto {
   id: number;
   title: string;
   isCompleted: boolean;

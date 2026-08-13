@@ -1,9 +1,9 @@
-import type TaskDto from "../../types/TaskDto";
+import type TaskDto from "../types/TaskDto";
 import PriorityBadge from "./PriorityBadge";
 import ProgressBar from "./ProgressBar";
-import ChevronsDownIcon from "../../assets/icons/chevrons-down.svg?react";
-import ChevronsUpIcon from "../../assets/icons/chevrons-up.svg?react";
-import CheckIcon from "../../assets/icons/check.svg?react";
+import ChevronsDownIcon from "../assets/icons/chevrons-down.svg?react";
+import ChevronsUpIcon from "../assets/icons/chevrons-up.svg?react";
+import CheckIcon from "../assets/icons/check.svg?react";
 
 interface Props {
   task: TaskDto;
