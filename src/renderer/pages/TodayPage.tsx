@@ -1,5 +1,5 @@
 import TaskTable from "../components/TaskTable";
-import { useTasks } from "../hooks/useTasks";
+import useTasks from "../hooks/useTasks";
 
 function TodayPage() {
   const { tasks, isLoading, toggleToday, toggleCompleted } = useTasks();
