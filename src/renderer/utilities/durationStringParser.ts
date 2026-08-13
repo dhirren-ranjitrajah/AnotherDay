@@ -7,7 +7,7 @@ export function parseDuration(s: string) {
     .forEach((part) => {
       const unit = part.slice(-1);
       const value = parseInt(part.slice(0, -1));
-      if (isNaN(value)) return;
+      if (isNaN(value)) return null;
       switch (unit) {
         case "m":
           sum += value;
