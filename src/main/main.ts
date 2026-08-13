@@ -1,6 +1,13 @@
-import { app, BrowserWindow } from "electron";
+import { app, BrowserWindow, ipcMain } from "electron";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import {
+  getAllTasks,
+  createTask,
+  updateTask,
+  deleteTask,
+  type TaskInput,
+} from "./database/connection";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -17,6 +24,7 @@ function createWindow() {
       preload: path.join(__dirname, "preload.mjs"),
     },
     icon: path.join(__dirname, "../src/assets/icons/favicon.png"),
+    backgroundColor: "#111111",
   });
 
   win.removeMenu();
@@ -28,7 +36,23 @@ function createWindow() {
   }
 }
 
-app.whenReady().then(createWindow);
+function registerTaskHandlers() {
+  ipcMain.handle("tasks:getAll", () => getAllTasks());
+  ipcMain.handle("tasks:create", (_event, input: TaskInput) =>
+    createTask(input),
+  );
+  ipcMain.handle(
+    "tasks:update",
+    (_event, id: number, changes: Partial<TaskInput>) =>
+      updateTask(id, changes),
+  );
+  ipcMain.handle("tasks:delete", (_event, id: number) => deleteTask(id));
+}
+
+app.whenReady().then(() => {
+  registerTaskHandlers();
+  createWindow();
+});
 
 app.on("window-all-closed", () => {
   if (process.platform !== "darwin") {

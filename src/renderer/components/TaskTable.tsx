@@ -6,12 +6,16 @@ interface Props {
   tableHeader: string;
   tasks: TaskData[];
   isTodayTable?: boolean;
+  onTransferClick?: (taskId: number) => void;
+  onCompleteClick?: (taskId: number) => void;
 }
 
 export default function TaskTable({
   tableHeader,
   tasks,
   isTodayTable = false,
+  onTransferClick,
+  onCompleteClick,
 }: Props) {
   const totalProgress = tasks.reduce(
     (sum, task) => sum + (task.estimate !== undefined ? task.progress || 0 : 0),
@@ -32,7 +36,13 @@ export default function TaskTable({
         </div>
       </div>
       {tasks.map((task) => (
-        <TaskRow key={task.id} task={task} isTodayTable={isTodayTable} />
+        <TaskRow
+          key={task.id}
+          task={task}
+          isTodayTable={isTodayTable}
+          onTransferClick={onTransferClick}
+          onCompleteClick={onCompleteClick}
+        />
       ))}
     </div>
   );

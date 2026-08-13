@@ -18,5 +18,5 @@
     "erasableSyntaxOnly": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["electron"]
+  "include": ["src/main", "src/preload"]
 }

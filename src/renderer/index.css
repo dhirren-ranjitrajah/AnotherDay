@@ -31,7 +31,7 @@
   body,
   div,
   button {
-    @apply text-text transition-all duration-300;
+    @apply text-text transition-colors duration-300;
   }
 
   h1 {

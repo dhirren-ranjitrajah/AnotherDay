@@ -1,9 +1,9 @@
 import type TaskData from "../types/TaskData";
 import PriorityBadge from "./PriorityBadge";
 import ProgressBar from "./ProgressBar";
-import ChevronsDownIcon from "../assets/icons/chevrons-down.svg?react";
-import ChevronsUpIcon from "../assets/icons/chevrons-up.svg?react";
-import CheckIcon from "../assets/icons/check.svg?react";
+import ChevronsDownIcon from "../../assets/icons/chevrons-down.svg?react";
+import ChevronsUpIcon from "../../assets/icons/chevrons-up.svg?react";
+import CheckIcon from "../../assets/icons/check.svg?react";
 
 interface Props {
   task: TaskData;
@@ -18,7 +18,7 @@ export default function TaskRow({
   onCompleteClick,
   isTodayTable = false,
 }: Props) {
-  const { id, title, estimate, progress, priority, category } = task;
+  const { id, title, estimate, progress, priority } = task;
   return (
     <div className="w-full group flex flex-row gap-4 items-center px-4 py-3 bg-background hover:bg-background-raised">
       <PriorityBadge priority={priority} />
@@ -33,6 +33,7 @@ export default function TaskRow({
       <div className="opacity-0 group-hover:opacity-100 flex flex-row gap-2 transition-opacity">
         <button
           type="button"
+          onClick={() => onTransferClick?.(id)}
           className="flex items-center justify-center w-12 h-8 rounded-md outline outline-1 outline-primary text-primary hover:outline-primary-hover hover:text-primary-hover transition-colors"
         >
           {isTodayTable ? (
@@ -43,6 +44,7 @@ export default function TaskRow({
         </button>
         <button
           type="button"
+          onClick={() => onCompleteClick?.(id)}
           className="flex items-center justify-center w-12 h-8 rounded-md bg-primary hover:bg-primary-hover transition-colors text-background-lowered"
         >
           <CheckIcon className="w-8 h-8" />
