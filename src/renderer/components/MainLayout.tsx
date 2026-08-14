@@ -1,19 +1,25 @@
 import { Outlet } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Navbar from "./Navbar";
 import AddTaskModal from "./AddTaskModal";
+import useTaskModal from "../hooks/useTaskModal";
 
 export default function MainLayout() {
-  const [isTaskModalOpen, setIsTaskModalOpen] = useState(false);
+  const taskModal = useTaskModal();
 
-  window.addEventListener("keydown", (e) => {
-    if (e.ctrlKey || e.altKey || e.metaKey) {
-      return;
-    }
-    if (/^[a-zA-Z0-9]$/.test(e.key)) {
-      setIsTaskModalOpen(true);
-    }
-  });
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.ctrlKey || e.altKey || e.metaKey) {
+        return;
+      }
+      if (/^[a-zA-Z0-9]$/.test(e.key)) {
+        taskModal.addTask();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, []);
 
   return (
     <div className="flex h-screen w-full flex-row bg-background transition-none">
@@ -21,9 +27,7 @@ export default function MainLayout() {
       <main className="flex-1 min-h-0 overflow-y-auto styled-scrollbar">
         <Outlet />
       </main>
-      {isTaskModalOpen && (
-        <AddTaskModal onClose={() => setIsTaskModalOpen(false)} />
-      )}
+      {taskModal.isTaskModalOpen && <AddTaskModal />}
     </div>
   );
 }

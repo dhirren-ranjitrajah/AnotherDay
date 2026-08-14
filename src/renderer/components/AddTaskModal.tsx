@@ -5,15 +5,18 @@ import type { TaskInput } from "../../types/electron";
 import Modal from "./Modal";
 import StyledInput from "./StyledInput";
 import { parseDuration } from "../utilities/durationStringParser";
+import useTaskModal from "../hooks/useTaskModal";
 
 interface Props {
-  onClose: () => void;
+  taskId?: number;
 }
 
-export default function AddTaskModal({ onClose }: Props) {
+export default function AddTaskModal({ taskId = undefined }: Props) {
+  const taskModal = useTaskModal();
   const location = useLocation();
-  const shouldAddToToday = location.pathname === "/";
   const { addTask } = useTasks();
+
+  const shouldAddToToday = location.pathname === "/";
   const [taskInput, setTaskInput] = useState<TaskInput>({
     title: "",
     estimate: undefined,
@@ -47,13 +50,13 @@ export default function AddTaskModal({ onClose }: Props) {
     // validate
 
     addTask(taskInput);
-    onClose();
+    taskModal.closeTaskModal();
   };
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
-        onClose();
+        taskModal.closeTaskModal();
       } else if (e.key === "Enter") {
         handleSubmit();
       }
@@ -67,7 +70,7 @@ export default function AddTaskModal({ onClose }: Props) {
   }, [taskInput]);
 
   return (
-    <Modal onClose={onClose}>
+    <Modal onClose={taskModal.closeTaskModal}>
       <div className="flex flex-col h-full w-full gap-4 items-center justify-center">
         <h1>
           Add to

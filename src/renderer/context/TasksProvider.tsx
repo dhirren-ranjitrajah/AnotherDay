@@ -3,7 +3,7 @@ import type TaskDto from "../../types/taskDto";
 import type { TaskInput } from "../../types/electron";
 import { TasksContext } from "./tasksContext";
 
-export function TasksProvider({ children }: { children: ReactNode }) {
+export default function TasksProvider({ children }: { children: ReactNode }) {
   const [tasks, setTasks] = useState<TaskDto[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
