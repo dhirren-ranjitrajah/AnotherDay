@@ -9,9 +9,6 @@ export default function MainLayout() {
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.ctrlKey || e.altKey || e.metaKey) {
-        return;
-      }
       if (/^[a-zA-Z0-9]$/.test(e.key)) {
         taskModal.addTask();
       }
