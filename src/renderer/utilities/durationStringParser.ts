@@ -1,5 +1,6 @@
 export function parseDuration(s: string) {
   let sum = 0;
+  let matched = false;
 
   s.trim()
     .replaceAll(" ", "")
@@ -8,6 +9,7 @@ export function parseDuration(s: string) {
       const unit = part.slice(-1);
       const value = parseInt(part.slice(0, -1));
       if (isNaN(value)) return null;
+      matched = true;
       switch (unit) {
         case "m":
           sum += value;
@@ -19,11 +21,12 @@ export function parseDuration(s: string) {
           sum += value * 60 * 8; // 8h workday
           break;
         default:
-          break;
+          matched = false;
+          return null;
       }
     });
 
-  return sum;
+  return matched ? sum : NaN;
 }
 
 export function durationAsString(n: number) {

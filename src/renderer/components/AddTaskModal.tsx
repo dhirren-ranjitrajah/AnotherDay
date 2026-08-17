@@ -27,7 +27,9 @@ export default function AddTaskModal({ taskId = undefined }: Props) {
     isCompleted: false,
   });
 
-  const [estimateStr, setEstimateStr] = useState<string>("");
+  const [estimateStr, setEstimateStr] = useState("");
+  const [taskErr, setTaskErr] = useState("");
+  const [estimateErr, setEstimateErr] = useState("");
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTaskInput({ ...taskInput, title: e.target.value });
@@ -47,10 +49,24 @@ export default function AddTaskModal({ taskId = undefined }: Props) {
   };
 
   const handleSubmit = () => {
-    // validate
+    setTaskErr("");
+    setEstimateErr("");
+    let err = false;
 
-    addTask(taskInput);
-    taskModal.closeTaskModal();
+    if (taskInput.title === "") {
+      setTaskErr("Task requires a description");
+      err = true;
+    }
+
+    if (taskInput.estimate === undefined && estimateStr !== "") {
+      setEstimateErr("e.g. 2d 3h 15m");
+      err = true;
+    }
+
+    if (!err) {
+      addTask(taskInput);
+      taskModal.closeTaskModal();
+    }
   };
 
   useEffect(() => {
@@ -71,7 +87,7 @@ export default function AddTaskModal({ taskId = undefined }: Props) {
 
   return (
     <Modal onClose={taskModal.closeTaskModal}>
-      <div className="flex flex-col h-full w-full gap-4 items-center justify-center">
+      <div className="flex flex-col w-full gap-4 items-center justify-center">
         <h1>
           Add to
           <span className="text-primary">
@@ -83,6 +99,7 @@ export default function AddTaskModal({ taskId = undefined }: Props) {
           <StyledInput
             label="Task"
             value={taskInput.title}
+            error={taskErr}
             onChange={handleTitleChange}
             autoFocus={true}
           />
@@ -90,6 +107,7 @@ export default function AddTaskModal({ taskId = undefined }: Props) {
             <StyledInput
               label="Estimate"
               value={estimateStr}
+              error={estimateErr}
               onChange={handleEstimateChange}
             />
           </div>
