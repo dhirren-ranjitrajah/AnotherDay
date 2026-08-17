@@ -130,7 +130,7 @@ export default function AddTaskModal() {
     <Modal onClose={taskModal.closeTaskModal}>
       <div className="flex flex-col w-full gap-4 items-center justify-center">
         <h1>
-          Add to
+          {taskModal.currentTask ? "Edit task in" : "Add to"}
           <span className="text-primary">
             {shouldAddToToday ? " today" : " backlog"}
           </span>
