@@ -1,5 +1,5 @@
 import { Outlet } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import Navbar from "./Navbar";
 import AddTaskModal from "./AddTaskModal";
 import useTaskModal from "../hooks/useTaskModal";
