@@ -39,7 +39,9 @@ export default function TaskRow({
       className="w-full group flex flex-row gap-4 items-center px-4 py-3 bg-background hover:bg-background-raised"
     >
       <PriorityBadge priority={priority} />
-      <p className="flex-1 line-clamp-1 text-[var(--color-category)] group-hover:line-clamp-none">
+      <p
+        className={`flex-1 line-clamp-1 ${categoryColor ? "text-[var(--color-category)]" : ""} group-hover:line-clamp-none`}
+      >
         {title}
       </p>
       {estimate !== undefined && estimate > 0 && (
