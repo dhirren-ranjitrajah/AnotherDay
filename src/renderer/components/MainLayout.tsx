@@ -16,7 +16,7 @@ export default function MainLayout() {
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, []);
+  }, [taskModal]);
 
   return (
     <div className="flex h-screen w-full flex-row bg-background transition-none">
