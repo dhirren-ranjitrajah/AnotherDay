@@ -9,11 +9,17 @@ import {
   parseDuration,
 } from "../utilities/durationStringParser";
 import useTaskModal from "../hooks/useTaskModal";
+import useCategoryStore from "../store/categoryStore";
+import usePriorityStore from "../store/priorityStore";
+import DropdownSearchBar from "./DropdownSearchBar";
 
 export default function AddTaskModal() {
+  const { addTask, updateTask } = useTasks();
+  const priorities = usePriorityStore((state) => state.priorities);
+  const categories = useCategoryStore((state) => state.categories);
   const taskModal = useTaskModal();
   const location = useLocation();
-  const { addTask, updateTask } = useTasks();
+
   const shouldAddToToday = location.pathname === "/";
 
   const [taskInput, setTaskInput] = useState<TaskInput>(
@@ -35,6 +41,8 @@ export default function AddTaskModal() {
   );
   const [taskErr, setTaskErr] = useState("");
   const [estimateErr, setEstimateErr] = useState("");
+  const [categoryErr, setCategoryErr] = useState("");
+  const [priorityErr, setPriorityErr] = useState("");
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTaskInput({ ...taskInput, title: e.target.value });
@@ -42,41 +50,59 @@ export default function AddTaskModal() {
 
   const handleEstimateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEstimateStr(e.target.value);
-    let estimate = 0;
-
-    estimate = parseDuration(e.target.value);
+    const estimate: number = parseDuration(e.target.value);
     setTaskInput({
       ...taskInput,
       estimate: isNaN(estimate) ? undefined : estimate,
     });
   };
 
-  const handleSubmit = () => {
-    setTaskErr("");
-    setEstimateErr("");
-    let err = false;
+  const handleCategoryChange = (category: string) => {
+    setTaskInput({ ...taskInput, category });
+  };
 
-    if (taskInput.title === "") {
-      setTaskErr("Task requires a description");
-      err = true;
-    }
-
-    if (taskInput.estimate === undefined && estimateStr !== "") {
-      setEstimateErr("e.g. 2d 3h 15m");
-      err = true;
-    }
-
-    if (!err) {
-      if (taskModal.currentTask) {
-        updateTask(taskModal.currentTask.id, taskInput);
-      } else {
-        addTask(taskInput);
-      }
-      taskModal.closeTaskModal();
-    }
+  const handlePriorityChange = (priority: string) => {
+    setTaskInput({ ...taskInput, priority });
   };
 
   useEffect(() => {
+    const handleSubmit = () => {
+      setTaskErr("");
+      setEstimateErr("");
+      setCategoryErr("");
+      setPriorityErr("");
+      let err = false;
+
+      if (taskInput.title === "") {
+        setTaskErr("task requires a description");
+        err = true;
+      }
+
+      if (taskInput.estimate === undefined && estimateStr !== "") {
+        setEstimateErr("e.g. 2d 3h 15m");
+        err = true;
+      }
+
+      if (taskInput.category && !categories.has(taskInput.category)) {
+        setCategoryErr("no matching category");
+        err = true;
+      }
+
+      if (taskInput.priority && !priorities.has(taskInput.priority)) {
+        setPriorityErr("no matching priority");
+        err = true;
+      }
+
+      if (!err) {
+        if (taskModal.currentTask) {
+          updateTask(taskModal.currentTask.id, taskInput);
+        } else {
+          addTask(taskInput);
+        }
+        taskModal.closeTaskModal();
+      }
+    };
+
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
         taskModal.closeTaskModal();
@@ -90,7 +116,15 @@ export default function AddTaskModal() {
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [taskInput]);
+  }, [
+    taskInput,
+    taskModal,
+    categories,
+    estimateStr,
+    priorities,
+    addTask,
+    updateTask,
+  ]);
 
   return (
     <Modal onClose={taskModal.closeTaskModal}>
@@ -118,6 +152,24 @@ export default function AddTaskModal() {
               onChange={handleEstimateChange}
             />
           </div>
+        </div>
+        <div
+          className={`flex flex-row w-full gap-4 px-32 transition-opacity ${taskInput.category || taskInput.priority ? "opacity-100" : "opacity-0"} focus-within:opacity-100`}
+        >
+          <DropdownSearchBar
+            value={taskInput.category ?? ""}
+            items={Array.from(categories.keys())}
+            onChange={(s) => handleCategoryChange(s)}
+            label="Category"
+            error={categoryErr}
+          />
+          <DropdownSearchBar
+            value={taskInput.priority ?? ""}
+            items={Array.from(priorities.keys())}
+            onChange={(s) => handlePriorityChange(s)}
+            label="Priority"
+            error={priorityErr}
+          />
         </div>
       </div>
     </Modal>

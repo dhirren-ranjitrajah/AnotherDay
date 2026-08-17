@@ -1,4 +1,4 @@
-interface Props {
+interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
   value?: string | number;
   label?: string;
   error?: string;
@@ -12,6 +12,7 @@ export default function StyledInput({
   error,
   onChange,
   autoFocus = false,
+  ...props
 }: Props) {
   return (
     <div className="flex flex-col w-full gap-1 rounded-md p-2 bg-background outline outline-background-raised transition-colors focus-within:outline-primary duration-200 ">
@@ -26,6 +27,7 @@ export default function StyledInput({
         onFocus={(e) => e.target.select()}
         className="min-w-0 bg-background text-text text-lg px-4 rounded-sm outline-none"
         autoFocus={autoFocus}
+        {...props}
       />
 
       <label className={`h-4 leading-4 text-error/80 text-xs text-center`}>
