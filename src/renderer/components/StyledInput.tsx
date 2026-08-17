@@ -23,6 +23,7 @@ export default function StyledInput({
         placeholder={label}
         value={value}
         onChange={onChange}
+        onFocus={(e) => e.target.select()}
         className="min-w-0 bg-background text-text text-lg px-4 rounded-sm outline-none"
         autoFocus={autoFocus}
       />

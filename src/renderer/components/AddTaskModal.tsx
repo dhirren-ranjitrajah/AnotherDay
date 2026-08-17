@@ -4,30 +4,35 @@ import useTasks from "../hooks/useTasks";
 import type { TaskInput } from "../../types/electron";
 import Modal from "./Modal";
 import StyledInput from "./StyledInput";
-import { parseDuration } from "../utilities/durationStringParser";
+import {
+  durationAsString,
+  parseDuration,
+} from "../utilities/durationStringParser";
 import useTaskModal from "../hooks/useTaskModal";
 
-interface Props {
-  taskId?: number;
-}
-
-export default function AddTaskModal({ taskId = undefined }: Props) {
+export default function AddTaskModal() {
   const taskModal = useTaskModal();
   const location = useLocation();
-  const { addTask } = useTasks();
-
+  const { addTask, updateTask } = useTasks();
   const shouldAddToToday = location.pathname === "/";
-  const [taskInput, setTaskInput] = useState<TaskInput>({
-    title: "",
-    estimate: undefined,
-    priority: undefined,
-    category: undefined,
-    progress: undefined,
-    isToday: shouldAddToToday,
-    isCompleted: false,
-  });
 
-  const [estimateStr, setEstimateStr] = useState("");
+  const [taskInput, setTaskInput] = useState<TaskInput>(
+    taskModal.currentTask ?? {
+      title: "",
+      estimate: undefined,
+      priority: undefined,
+      category: undefined,
+      progress: undefined,
+      isToday: shouldAddToToday,
+      isCompleted: false,
+    },
+  );
+
+  const [estimateStr, setEstimateStr] = useState<string>(
+    taskModal.currentTask
+      ? durationAsString(taskModal.currentTask.estimate ?? 0)
+      : "",
+  );
   const [taskErr, setTaskErr] = useState("");
   const [estimateErr, setEstimateErr] = useState("");
 
@@ -37,10 +42,8 @@ export default function AddTaskModal({ taskId = undefined }: Props) {
 
   const handleEstimateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEstimateStr(e.target.value);
-    /** Parsing */
     let estimate = 0;
 
-    // m, h, d
     estimate = parseDuration(e.target.value);
     setTaskInput({
       ...taskInput,
@@ -64,7 +67,11 @@ export default function AddTaskModal({ taskId = undefined }: Props) {
     }
 
     if (!err) {
-      addTask(taskInput);
+      if (taskModal.currentTask) {
+        updateTask(taskModal.currentTask.id, taskInput);
+      } else {
+        addTask(taskInput);
+      }
       taskModal.closeTaskModal();
     }
   };

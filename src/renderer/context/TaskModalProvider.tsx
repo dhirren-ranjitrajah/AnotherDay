@@ -11,10 +11,13 @@ export default function TaskModalProvider({ children }: Props) {
   const [currentTask, setCurrentTask] = useState<TaskDto | null>(null);
 
   const addTask = () => setIsTaskModalOpen(true);
-  const closeTaskModal = () => setIsTaskModalOpen(false);
   const editTask = (task: TaskDto) => {
-    setIsTaskModalOpen(true);
     setCurrentTask(task);
+    setIsTaskModalOpen(true);
+  };
+  const closeTaskModal = () => {
+    setCurrentTask(null);
+    setIsTaskModalOpen(false);
   };
 
   return (
