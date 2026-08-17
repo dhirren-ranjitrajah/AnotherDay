@@ -44,6 +44,7 @@ export default function TaskRow({
             e.stopPropagation();
             onTransferClick?.(id);
           }}
+          onDoubleClick={(e) => e.stopPropagation()}
           className="flex items-center justify-center w-12 h-8 rounded-md outline outline-1 outline-primary text-primary hover:outline-primary-hover hover:text-primary-hover transition-colors"
         >
           {isTodayTable ? (
@@ -58,6 +59,7 @@ export default function TaskRow({
             e.stopPropagation();
             onCompleteClick?.(id);
           }}
+          onDoubleClick={(e) => e.stopPropagation()}
           className="flex items-center justify-center w-12 h-8 rounded-md bg-primary hover:bg-primary-hover transition-colors text-background-lowered"
         >
           <CheckIcon className="w-8 h-8" />
