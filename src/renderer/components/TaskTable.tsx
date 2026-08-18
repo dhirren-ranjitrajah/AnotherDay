@@ -2,22 +2,23 @@ import type TaskDto from "../../types/taskDto";
 import { durationAsString } from "../utilities/durationStringParser";
 import ProgressBar from "./ProgressBar";
 import TaskRow from "./TaskRow";
+import Sortable from "./Sortable";
+import Droppable from "./Droppable";
+import useTasks from "../hooks/useTasks";
 
 interface Props {
   tableHeader: string;
   tasks: TaskDto[];
   isTodayTable?: boolean;
-  onTransferClick?: (taskId: number) => void;
-  onCompleteClick?: (taskId: number) => void;
 }
 
 export default function TaskTable({
   tableHeader,
   tasks,
   isTodayTable = false,
-  onTransferClick,
-  onCompleteClick,
 }: Props) {
+  const { toggleToday, toggleCompleted } = useTasks();
+
   const incompleteTasks = tasks.filter((t) => !t.isCompleted);
   const totalProgress = incompleteTasks.reduce(
     (sum, task) => sum + (task.estimate !== undefined ? task.progress || 0 : 0),
@@ -29,23 +30,33 @@ export default function TaskTable({
   );
 
   return (
-    <div className="w-full flex flex-col">
-      <div className="flex flex-row items-center justify-between mx-8 py-2 border-y border-primary mt-2">
-        <h2 className="text-primary px-4">{tableHeader}</h2>
-        <div className="flex flex-row items-center gap-4 text-primary">
-          <ProgressBar progress={totalProgress} max={totalEstimate} />
-          <p>{durationAsString(totalEstimate)}</p>
+    <Droppable id={tableHeader}>
+      <div className="w-full flex flex-col">
+        <div className="flex flex-row items-center justify-between mx-8 py-2 border-y border-primary mt-2">
+          <h2 className="text-primary px-4">{tableHeader}</h2>
+          <div className="flex flex-row items-center gap-4 text-primary">
+            <ProgressBar progress={totalProgress} max={totalEstimate} />
+            <p>{durationAsString(totalEstimate)}</p>
+          </div>
         </div>
+        {incompleteTasks.map((task, index) => (
+          <Sortable
+            key={task.id}
+            id={task.id}
+            index={index}
+            group={tableHeader}
+            data={task}
+          >
+            <TaskRow
+              key={task.id}
+              task={task}
+              isTodayTable={isTodayTable}
+              onTransferClick={toggleToday}
+              onCompleteClick={toggleCompleted}
+            />
+          </Sortable>
+        ))}
       </div>
-      {incompleteTasks.map((task) => (
-        <TaskRow
-          key={task.id}
-          task={task}
-          isTodayTable={isTodayTable}
-          onTransferClick={onTransferClick}
-          onCompleteClick={onCompleteClick}
-        />
-      ))}
-    </div>
+    </Droppable>
   );
 }

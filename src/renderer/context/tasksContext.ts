@@ -8,6 +8,7 @@ export interface TasksContextValue {
   addTask: (task: TaskInput) => Promise<void>;
   updateTask: (id: number, changes: Partial<TaskInput>) => Promise<void>;
   deleteTask: (id: number) => Promise<void>;
+  reorderTasks: (ids: number[]) => Promise<void>;
   toggleToday: (id: number) => Promise<void>;
   toggleCompleted: (id: number) => Promise<void>;
 }

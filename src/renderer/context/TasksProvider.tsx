@@ -21,17 +21,31 @@ export default function TasksProvider({ children }: { children: ReactNode }) {
 
   const updateTask = useCallback(
     async (id: number, changes: Partial<TaskInput>) => {
-      await window.electron.tasks.update(id, changes);
       setTasks((prev) =>
         prev.map((task) => (task.id === id ? { ...task, ...changes } : task)),
       );
+      await window.electron.tasks.update(id, changes);
     },
     [],
   );
 
   const deleteTask = useCallback(async (id: number) => {
-    await window.electron.tasks.delete(id);
     setTasks((prev) => prev.filter((task) => task.id !== id));
+    await window.electron.tasks.delete(id);
+  }, []);
+
+  const reorderTasks = useCallback(async (ids: number[]) => {
+    setTasks((prev) => {
+      const last = ids.length - 1;
+      const order = new Map(ids.map((id, idx) => [id, last - idx]));
+      return prev
+        .map((t) =>
+          order.has(t.id) ? { ...t, sortOrder: order.get(t.id)! } : t,
+        )
+        .sort((a, b) => b.sortOrder - a.sortOrder);
+    });
+
+    await window.electron.tasks.reorder(ids);
   }, []);
 
   const toggleToday = useCallback(
@@ -60,6 +74,7 @@ export default function TasksProvider({ children }: { children: ReactNode }) {
         addTask,
         updateTask,
         deleteTask,
+        reorderTasks,
         toggleToday,
         toggleCompleted,
       }}
