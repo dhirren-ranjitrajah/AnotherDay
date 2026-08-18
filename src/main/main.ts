@@ -49,7 +49,7 @@ function registerTaskHandlers() {
       updateTask(id, changes),
   );
   ipcMain.handle("tasks:delete", (_event, id: number) => deleteTask(id));
-  ipcMain.handle("tasks:reoder", (_event, ids: number[]) => reorderTasks(ids));
+  ipcMain.handle("tasks:reorder", (_event, ids: number[]) => reorderTasks(ids));
 }
 
 app.whenReady().then(() => {
