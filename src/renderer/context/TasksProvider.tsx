@@ -16,7 +16,7 @@ export default function TasksProvider({ children }: { children: ReactNode }) {
 
   const addTask = useCallback(async (task: TaskInput) => {
     const created = await window.electron.tasks.create(task);
-    setTasks((prev) => [...prev, created]);
+    setTasks((prev) => [created, ...prev]);
   }, []);
 
   const updateTask = useCallback(

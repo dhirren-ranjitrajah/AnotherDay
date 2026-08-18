@@ -6,8 +6,10 @@ import {
   createTask,
   updateTask,
   deleteTask,
-  type TaskInput,
+  reorderTasks,
 } from "./database/api/taskApi";
+
+import type { TaskInput } from "../types/electron";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -47,6 +49,7 @@ function registerTaskHandlers() {
       updateTask(id, changes),
   );
   ipcMain.handle("tasks:delete", (_event, id: number) => deleteTask(id));
+  ipcMain.handle("tasks:reoder", (_event, ids: number[]) => reorderTasks(ids));
 }
 
 app.whenReady().then(() => {

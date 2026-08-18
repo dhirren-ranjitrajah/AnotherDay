@@ -11,5 +11,7 @@ contextBridge.exposeInMainWorld("electron", {
       ipcRenderer.invoke("tasks:update", id, changes),
     delete: (id: number): Promise<void> =>
       ipcRenderer.invoke("tasks:delete", id),
+    reorder: (ids: number[]): Promise<void> =>
+      ipcRenderer.invoke("tasks:reorder", ids),
   },
 });

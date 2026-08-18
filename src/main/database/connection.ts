@@ -20,6 +20,17 @@ export default function getDb(): DatabaseSync {
         isToday INTEGER NOT NULL DEFAULT 0
       )
     `);
+
+    // TODO - integrate this into the fresh install
+    const hasSortOrder = (
+      db.prepare("PRAGMA table_info(tasks)").all() as { name: string }[]
+    ).some((col) => col.name === "sortOrder");
+    if (!hasSortOrder) {
+      db.exec(
+        "ALTER TABLE tasks ADD COLUMN sortOrder INTEGER NOT NULL DEFAULT 0",
+      );
+      db.exec("UPDATE tasks SET sortOrder = id");
+    }
   }
   return db;
 }

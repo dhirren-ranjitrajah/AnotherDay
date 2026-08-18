@@ -10,4 +10,6 @@ export default interface TaskDto {
   category: string | undefined;
 
   isToday: boolean;
+
+  sortOrder: number;
 }

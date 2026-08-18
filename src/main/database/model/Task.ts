@@ -7,4 +7,5 @@ export default interface Task {
   priority: string | null;
   category: string | null;
   isToday: number;
+  sortOrder: number;
 }

@@ -1,8 +1,7 @@
 import getDb from "../connection";
 import type TaskDto from "../../../types/taskDto";
 import type Task from "../model/Task";
-
-export type TaskInput = Omit<TaskDto, "id">;
+import type { TaskInput } from "../../../types/electron";
 
 function toDto(task: Task): TaskDto {
   return {
@@ -14,21 +13,29 @@ function toDto(task: Task): TaskDto {
     priority: task.priority ?? undefined,
     category: task.category ?? undefined,
     isToday: !!task.isToday,
+    sortOrder: task.sortOrder,
   };
 }
 
 export function getAllTasks(): TaskDto[] {
   const rows = getDb()
-    .prepare("SELECT * FROM tasks ORDER BY id ASC")
+    .prepare("SELECT * FROM tasks ORDER BY sortOrder DESC")
     .all() as unknown as Task[];
   return rows.map(toDto);
 }
 
 export function createTask(input: TaskInput): TaskDto {
-  const result = getDb()
+  const db = getDb();
+
+  const { maxSortOrder } = db
+    .prepare(`SELECT COALESCE(MAX(sortOrder), -1) AS maxSortOrder FROM tasks`)
+    .get() as { maxSortOrder: number };
+  const sortOrder = maxSortOrder + 1;
+
+  const result = db
     .prepare(
-      `INSERT INTO tasks (title, isCompleted, estimate, progress, priority, category, isToday)
-       VALUES (?, ?, ?, ?, ?, ?, ?)`,
+      `INSERT INTO tasks (title, isCompleted, estimate, progress, priority, category, isToday, sortOrder)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
     )
     .run(
       input.title,
@@ -38,8 +45,9 @@ export function createTask(input: TaskInput): TaskDto {
       input.priority ?? null,
       input.category ?? null,
       input.isToday ? 1 : 0,
+      sortOrder,
     );
-  return { id: Number(result.lastInsertRowid), ...input };
+  return { id: Number(result.lastInsertRowid), sortOrder, ...input };
 }
 
 export function updateTask(id: number, changes: Partial<TaskInput>): void {
@@ -56,8 +64,28 @@ export function updateTask(id: number, changes: Partial<TaskInput>): void {
   getDb()
     .prepare(`UPDATE tasks SET ${setClause} WHERE id = ?`)
     .run(...values, id);
+
+  // Remove sort-order value if marked as complete
+  if (changes.isCompleted) {
+    getDb().prepare(`UPDATE tasks SET sortOrder = -1 WHERE id = ?`).run(id);
+  }
 }
 
 export function deleteTask(id: number): void {
   getDb().prepare("DELETE FROM tasks WHERE id = ?").run(id);
+}
+
+export function reorderTasks(ids: number[]): void {
+  const db = getDb();
+  const stmt = db.prepare("UPDATE tasks SET sortOrder = ? WHERE id = ?");
+  const last = ids.length - 1;
+
+  db.exec("BEGIN");
+  try {
+    ids.forEach((id, index) => stmt.run(last - index, id));
+    db.exec("COMMIT");
+  } catch (err) {
+    db.exec("ROLLBACK");
+    throw err;
+  }
 }
