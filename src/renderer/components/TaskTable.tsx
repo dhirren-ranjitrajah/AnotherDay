@@ -10,12 +10,14 @@ interface Props {
   tableHeader: string;
   tasks: TaskDto[];
   isTodayTable?: boolean;
+  prompt?: string;
 }
 
 export default function TaskTable({
   tableHeader,
   tasks,
   isTodayTable = false,
+  prompt,
 }: Props) {
   const { toggleToday, toggleCompleted } = useTasks();
 
@@ -56,6 +58,11 @@ export default function TaskTable({
             />
           </Sortable>
         ))}
+        {incompleteTasks.length == 0 && prompt && (
+          <p className="w-full text-text/50 text-xl text-center p-4">
+            No tasks yet. Start typing to add some!
+          </p>
+        )}
       </div>
     </Droppable>
   );

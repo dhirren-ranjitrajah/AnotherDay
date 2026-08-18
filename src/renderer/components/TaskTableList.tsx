@@ -11,6 +11,7 @@ type Group = "Today" | "Backlog";
 interface TableConfig {
   tableHeader: Group;
   isTodayTable?: boolean;
+  emptyPrompt?: string;
 }
 
 interface Props {
@@ -68,10 +69,15 @@ export default function TaskTableList({ tables }: Props) {
           tableHeader={table.tableHeader}
           tasks={items[table.tableHeader]}
           isTodayTable={table.isTodayTable}
+          prompt={table.emptyPrompt}
         />
       ))}
       <DragOverlay>
-        {(source) => <TaskRow task={source.data as TaskDto} />}
+        {(source) => (
+          <div className="outline outline-primary/50 rounded-lg">
+            <TaskRow task={source.data as TaskDto} />
+          </div>
+        )}
       </DragOverlay>
     </DragDropProvider>
   );

@@ -6,7 +6,10 @@ export default function BacklogPage() {
       <TaskTableList
         tables={[
           { tableHeader: "Today", isTodayTable: true },
-          { tableHeader: "Backlog" },
+          {
+            tableHeader: "Backlog",
+            emptyPrompt: "No tasks here. Start typing to add some!",
+          },
         ]}
       />
     </section>
