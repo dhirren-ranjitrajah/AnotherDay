@@ -15,14 +15,6 @@
 
   --color-primary: #d1a2dc;
   --color-primary-hover: #e5cbeb;
-
-  --color-priority-0: #bd6f6f;
-  --color-priority-1: #bdb16f;
-  --color-priority-2: #6fbd76;
-
-  --color-category-0: #6fbdb5;
-  --color-category-1: #6f85bd;
-  --color-category-2: #8c6fbd;
 }
 
 @layer base {
