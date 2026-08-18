@@ -128,15 +128,14 @@ export default function AddTaskModal() {
 
   return (
     <Modal onClose={taskModal.closeTaskModal}>
-      <div className="flex flex-col w-full gap-4 items-center justify-center">
+      <div className="flex flex-col w-full gap-16 items-center justify-center">
         <h1>
           {taskModal.currentTask ? "Edit task in" : "Add to"}
           <span className="text-primary">
             {shouldAddToToday ? " today" : " backlog"}
           </span>
         </h1>
-        <h1 className="text-primary"></h1>
-        <div className="flex flex-row w-full gap-4 px-32">
+        <div className="flex flex-row w-full gap-8 px-32">
           <StyledInput
             label="Task"
             value={taskInput.title}
@@ -154,7 +153,7 @@ export default function AddTaskModal() {
           </div>
         </div>
         <div
-          className={`flex flex-row w-full gap-4 px-32 transition-opacity ${taskInput.category || taskInput.priority ? "opacity-100" : "opacity-0"} focus-within:opacity-100`}
+          className={`flex flex-row w-full gap-8 px-32 transition-opacity ${taskInput.category || taskInput.priority ? "opacity-100" : "opacity-0 pointer-events-none"} focus-within:opacity-100`}
         >
           <DropdownSearchBar
             value={taskInput.category ?? ""}
