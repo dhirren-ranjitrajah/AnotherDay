@@ -10,6 +10,7 @@ declare global {
         create: (task: TaskInput) => Promise<TaskDto>;
         update: (id: number, changes: Partial<TaskInput>) => Promise<void>;
         delete: (id: number) => Promise<void>;
+        reorder: (ids: number[]) => Promise<void>;
       };
     };
   }
