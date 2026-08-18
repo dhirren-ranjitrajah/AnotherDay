@@ -32,7 +32,7 @@ export default function PriorityBadge({ task }: Props) {
           priority: nextPriority,
         })
       }
-      className={`group/priority flex justify-center w-2 h-8 rounded-[2px] bg-[var(--color-priority)] transition-all hover:w-16 items-center`}
+      className={`group/priority flex justify-center w-2 h-8 rounded-[2px] bg-[var(--color-priority)] transition-all ${priority ? "hover:w-16" : ""} items-center`}
     >
       <p className="opacity-0 text-center group-hover/priority:delay-100 group-hover/priority:opacity-100 duration-200 text-background text-sm select-none">
         {priority?.toLowerCase()}
