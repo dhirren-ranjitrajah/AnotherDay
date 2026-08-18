@@ -38,7 +38,9 @@ export default function TaskRow({
       style={{ "--color-category": categoryColor } as React.CSSProperties}
       className="w-full group flex flex-row gap-4 items-center px-4 py-3 bg-background hover:bg-background-raised"
     >
-      <PriorityBadge priority={priority} />
+      <div onDoubleClick={(e) => e.stopPropagation()}>
+        <PriorityBadge task={task} />
+      </div>
       <p
         className={`flex-1 line-clamp-1 ${categoryColor ? "text-[var(--color-category)]" : ""} group-hover:line-clamp-none`}
       >
