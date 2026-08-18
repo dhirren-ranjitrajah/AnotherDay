@@ -20,6 +20,7 @@ export default function Sortable<T extends Data>({
   const { ref, isDragSource } = useSortable({ id, index, group, data });
   return (
     <div
+      tabIndex={-1}
       ref={ref}
       style={{ opacity: isDragSource ? 0 : 1 } as React.CSSProperties}
     >

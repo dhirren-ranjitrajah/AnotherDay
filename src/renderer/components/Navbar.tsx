@@ -14,6 +14,7 @@ export default function Navbar() {
       <nav className="flex flex-col h-full gap-4 border-r-4 border-background-lowered p-4 duration-400">
         <NavLink
           to="/"
+          tabIndex={-1}
           className={({ isActive }) =>
             navLinkClass + (isActive ? " text-primary" : "")
           }
@@ -24,6 +25,7 @@ export default function Navbar() {
         </NavLink>
         <NavLink
           to="/backlog"
+          tabIndex={-1}
           className={({ isActive }) =>
             navLinkClass + (isActive ? " text-primary" : "")
           }

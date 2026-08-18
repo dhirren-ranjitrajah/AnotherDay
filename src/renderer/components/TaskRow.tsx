@@ -25,7 +25,7 @@ export default function TaskRow({
   const { editTask } = useTaskModal();
   const categories = useCategoryStore((s) => s.categories);
 
-  const { id, title, estimate, progress, priority, category } = task;
+  const { id, title, estimate, progress, category } = task;
 
   let categoryColor: HexColor | undefined = undefined;
   if (category && categories.has(category)) {
@@ -61,6 +61,7 @@ export default function TaskRow({
       <div className="opacity-0 group-hover:opacity-100 flex flex-row gap-2 transition-opacity">
         <button
           type="button"
+          tabIndex={-1}
           onClick={(e) => {
             e.stopPropagation();
             onTransferClick?.(id);
@@ -76,6 +77,7 @@ export default function TaskRow({
         </button>
         <button
           type="button"
+          tabIndex={-1}
           onClick={(e) => {
             e.stopPropagation();
             onCompleteClick?.(id);
