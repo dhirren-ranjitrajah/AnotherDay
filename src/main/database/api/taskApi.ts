@@ -19,7 +19,7 @@ function toDto(task: Task): TaskDto {
 
 export function getAllTasks(): TaskDto[] {
   const rows = getDb()
-    .prepare("SELECT * FROM tasks ORDER BY sortOrder DESC")
+    .prepare("SELECT * FROM tasks ORDER BY sortOrder ASC")
     .all() as unknown as Task[];
   return rows.map(toDto);
 }
@@ -78,11 +78,10 @@ export function deleteTask(id: number): void {
 export function reorderTasks(ids: number[]): void {
   const db = getDb();
   const stmt = db.prepare("UPDATE tasks SET sortOrder = ? WHERE id = ?");
-  const last = ids.length - 1;
 
   db.exec("BEGIN");
   try {
-    ids.forEach((id, index) => stmt.run(last - index, id));
+    ids.forEach((id, index) => stmt.run(index, id));
     db.exec("COMMIT");
   } catch (err) {
     db.exec("ROLLBACK");

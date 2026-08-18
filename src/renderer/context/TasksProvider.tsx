@@ -16,7 +16,7 @@ export default function TasksProvider({ children }: { children: ReactNode }) {
 
   const addTask = useCallback(async (task: TaskInput) => {
     const created = await window.electron.tasks.create(task);
-    setTasks((prev) => [created, ...prev]);
+    setTasks((prev) => [...prev, created]);
   }, []);
 
   const updateTask = useCallback(
@@ -36,13 +36,12 @@ export default function TasksProvider({ children }: { children: ReactNode }) {
 
   const reorderTasks = useCallback(async (ids: number[]) => {
     setTasks((prev) => {
-      const last = ids.length - 1;
-      const order = new Map(ids.map((id, idx) => [id, last - idx]));
+      const order = new Map(ids.map((id, idx) => [id, idx]));
       return prev
         .map((t) =>
           order.has(t.id) ? { ...t, sortOrder: order.get(t.id)! } : t,
         )
-        .sort((a, b) => b.sortOrder - a.sortOrder);
+        .sort((a, b) => a.sortOrder - b.sortOrder);
     });
 
     await window.electron.tasks.reorder(ids);
