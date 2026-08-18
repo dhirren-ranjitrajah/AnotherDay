@@ -1,11 +1,6 @@
-import useTasks from "../hooks/useTasks";
 import TaskTableList from "../components/TaskTableList";
 
 function TodayPage() {
-  const { isLoading } = useTasks();
-
-  if (isLoading) return null;
-
   return (
     <section className="bg-background">
       <TaskTableList tables={[{ tableHeader: "Today", isTodayTable: true }]} />
