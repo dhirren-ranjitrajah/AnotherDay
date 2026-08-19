@@ -3,9 +3,11 @@ import useTasks from "../hooks/useTasks";
 import type TaskDto from "../../types/taskDto";
 import usePriorityStore from "../store/priorityStore";
 import useCategoryStore from "../store/categoryStore";
+import useTaskModal from "../hooks/useTaskModal";
 
 export default function PrioritisationPage() {
   const { tasks, updateTask } = useTasks();
+  const { isTaskModalOpen } = useTaskModal();
   const { priorities } = usePriorityStore();
   const { categories } = useCategoryStore();
 
@@ -42,10 +44,12 @@ export default function PrioritisationPage() {
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
+      if (isTaskModalOpen) return;
+
       if (/^[0-9]$/.test(e.key)) {
         const parsed = parseInt(e.key);
         if (!isNaN(parsed)) {
-          const oneIndexed = (parsed - 1 + 10) % 10; // assume keypress was 1-indexed
+          const oneIndexed = (parsed - 1 + 10) % 10; // keypress is 1-indexed
           if (oneIndexed < priorityArray.length) {
             catalogCurrentTask(oneIndexed);
           }
@@ -55,7 +59,13 @@ export default function PrioritisationPage() {
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [tasks, priorityArray, prioritizationQueue, catalogCurrentTask]);
+  }, [
+    tasks,
+    isTaskModalOpen,
+    priorityArray,
+    prioritizationQueue,
+    catalogCurrentTask,
+  ]);
 
   return (
     <section className="bg-background">
