@@ -17,11 +17,14 @@
 }
 
 @layer base {
+  div {
+    @apply transition-colors duration-300;
+  }
+
   h1,
   h2,
   h3,
   body,
-  div,
   button {
     @apply text-text transition-colors duration-300;
   }
