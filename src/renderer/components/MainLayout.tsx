@@ -11,7 +11,7 @@ export default function MainLayout() {
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (/^[a-zA-Z0-9]$/.test(e.key)) {
+      if (/^[a-zA-Z]$/.test(e.key)) {
         addTask();
       }
       if (!isTaskModalOpen) {

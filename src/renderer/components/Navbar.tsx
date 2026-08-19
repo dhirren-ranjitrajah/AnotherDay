@@ -1,6 +1,7 @@
 import { NavLink } from "react-router-dom";
 import HomeIcon from "../../assets/icons/home.svg?react";
 import BacklogIcon from "../../assets/icons/list.svg?react";
+import PrioritisationIcon from "../../assets/icons/crosshair.svg?react";
 import CompletedIcon from "../../assets/icons/check.svg?react";
 
 export default function Navbar() {
@@ -11,7 +12,7 @@ export default function Navbar() {
     "min-w-8 min-h-8 w-8 h-8 transition-colors group-hover/navlink:text-primary-hover group-hover/navlink:duration-200";
 
   return (
-    <div className="group top-0 left-0 bottom-0 h-full py-4 z-10 w-16 hover:w-32 transition-all duration-400 bg-background-lowered/50">
+    <div className="group top-0 left-0 bottom-0 h-full py-4 z-10 w-16 hover:w-40 transition-all duration-400 bg-background-lowered/50">
       <nav className="flex flex-col h-full gap-4 border-r-4 border-background-lowered p-4 duration-400">
         <NavLink
           to="/"
@@ -33,6 +34,16 @@ export default function Navbar() {
         >
           <BacklogIcon className={iconClass} />
           <p className={navLinkTextClass}>Backlog</p>
+        </NavLink>
+        <NavLink
+          to="/prioritisation"
+          tabIndex={-1}
+          className={({ isActive }) =>
+            navLinkClass + (isActive ? " text-primary" : "")
+          }
+        >
+          <PrioritisationIcon className={iconClass} />
+          <p className={navLinkTextClass}>Prioritise</p>
         </NavLink>
         <NavLink
           to="/done"

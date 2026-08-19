@@ -5,6 +5,7 @@ import BacklogPage from "./pages/BacklogPage";
 import TasksProvider from "./context/TasksProvider";
 import TaskModalProvider from "./context/TaskModalProvider";
 import DonePage from "./pages/DonePage";
+import PrioritisationPage from "./pages/PrioritisationPage";
 
 export default function App() {
   return (
@@ -16,6 +17,7 @@ export default function App() {
               <Route path="/" element={<TodayPage />} />
               <Route path="/backlog" element={<BacklogPage />} />
               <Route path="/done" element={<DonePage />} />
+              <Route path="/prioritisation" element={<PrioritisationPage />} />
             </Route>
           </Routes>
         </HashRouter>
