@@ -6,6 +6,9 @@ import Sortable from "./Sortable";
 import Droppable from "./Droppable";
 import useTasks from "../hooks/useTasks";
 import TasksDonutChart from "./TasksDonutChart";
+import { useState } from "react";
+import ChevronRightIcon from "../../assets/icons/chevron-right.svg?react";
+import ChevronDownIcon from "../../assets/icons/chevron-down.svg?react";
 
 interface Props {
   tableHeader: string;
@@ -21,6 +24,7 @@ export default function TaskTable({
   prompt,
 }: Props) {
   const { toggleToday, toggleCompleted } = useTasks();
+  const [isCollapsed, setIsCollapsed] = useState(false);
 
   const incompleteTasks = tasks.filter((t) => !t.isCompleted);
   const totalProgress = incompleteTasks.reduce(
@@ -32,12 +36,26 @@ export default function TaskTable({
     0,
   );
 
+  const iconClass = "h-6 w-6 text-primary";
+
   return (
     <Droppable id={tableHeader}>
       <div className="w-full flex flex-col">
         {/* Table Header */}
-        <div className="flex flex-row items-center justify-between mx-8 py-2 border-y border-primary mt-2">
-          <h2 className="text-primary px-4">{tableHeader}</h2>
+        <div
+          onClick={() => setIsCollapsed((c) => !c)}
+          className="group/header flex flex-row items-center justify-between mx-8 py-2 border-y border-primary mt-2"
+        >
+          <div className="flex flex-row items-center">
+            <div className="opacity-0 group-hover/header:opacity-100 transition-opacity">
+              {isCollapsed ? (
+                <ChevronRightIcon className={iconClass} />
+              ) : (
+                <ChevronDownIcon className={iconClass} />
+              )}
+            </div>
+            <h2 className="text-primary">{tableHeader}</h2>
+          </div>
           <div className="flex flex-row items-center gap-4 text-primary">
             <ProgressBar progress={totalProgress} max={totalEstimate} />
             <p>{durationAsString(totalEstimate)}</p>
@@ -45,29 +63,35 @@ export default function TaskTable({
           </div>
         </div>
         {/* Table Rows */}
-        {incompleteTasks.map((task, index) => (
-          <Sortable
-            key={task.id}
-            id={task.id}
-            index={index}
-            group={tableHeader}
-            data={task}
-          >
-            <TaskRow
-              key={task.id}
-              task={task}
-              isTodayTable={isTodayTable}
-              onTransferClick={toggleToday}
-              onCompleteClick={toggleCompleted}
-            />
-          </Sortable>
-        ))}
-        {/* Prompt (if empty, and provided) */}
-        {incompleteTasks.length == 0 && prompt && (
-          <p className="w-full text-text/50 text-xl text-center p-4">
-            No tasks yet. Start typing to add some!
-          </p>
-        )}
+        <div
+          className={`grid transition-[grid-template-rows] duration-500 ease-in-out ${isCollapsed ? "grid-rows-[0fr]" : "grid-rows-[1fr]"}`}
+        >
+          <div className="overflow-hidden min-h-0">
+            {incompleteTasks.map((task, index) => (
+              <Sortable
+                key={task.id}
+                id={task.id}
+                index={index}
+                group={tableHeader}
+                data={task}
+              >
+                <TaskRow
+                  key={task.id}
+                  task={task}
+                  isTodayTable={isTodayTable}
+                  onTransferClick={toggleToday}
+                  onCompleteClick={toggleCompleted}
+                />
+              </Sortable>
+            ))}
+            {/* Prompt (if empty, and provided) */}
+            {incompleteTasks.length == 0 && prompt && (
+              <p className="w-full text-text/50 text-xl text-center p-4">
+                No tasks yet. Start typing to add some!
+              </p>
+            )}
+          </div>
+        </div>
       </div>
     </Droppable>
   );
