@@ -42,7 +42,7 @@ export default function TaskRow({
         <PriorityBadge task={task} />
       </div>
       <p
-        className={`flex-1 line-clamp-1 ${categoryColor ? "text-[var(--color-category)]" : ""} group-hover:line-clamp-none break-all`}
+        className={`flex-1 line-clamp-1 ${categoryColor ? "text-[var(--color-category)]" : ""} group-hover:line-clamp-none break-all select-none`}
       >
         {title}
       </p>
