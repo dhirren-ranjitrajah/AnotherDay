@@ -1,6 +1,6 @@
 import { useNavigate, useLocation } from "react-router-dom";
 
-const Navigation_Route_Cycle = ["/", "/backlog"];
+const Navigation_Route_Cycle = ["/", "/backlog", "/done"];
 
 export default function useNavigationHelper() {
   const navigate = useNavigate();

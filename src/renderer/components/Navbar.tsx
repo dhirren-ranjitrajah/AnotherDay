@@ -1,6 +1,7 @@
 import { NavLink } from "react-router-dom";
 import HomeIcon from "../../assets/icons/home.svg?react";
 import BacklogIcon from "../../assets/icons/list.svg?react";
+import CompletedIcon from "../../assets/icons/check.svg?react";
 
 export default function Navbar() {
   const navLinkClass = "group/navlink flex flex-row gap-2 items-center";
@@ -32,6 +33,16 @@ export default function Navbar() {
         >
           <BacklogIcon className={iconClass} />
           <p className={navLinkTextClass}>Backlog</p>
+        </NavLink>
+        <NavLink
+          to="/done"
+          tabIndex={-1}
+          className={({ isActive }) =>
+            navLinkClass + (isActive ? " text-primary" : "")
+          }
+        >
+          <CompletedIcon className={iconClass} />
+          <p className={navLinkTextClass}>Done</p>
         </NavLink>
       </nav>
     </div>

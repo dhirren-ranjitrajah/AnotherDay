@@ -5,7 +5,7 @@ export default function BacklogPage() {
     <section className="bg-background">
       <TaskTableList
         tables={[
-          { tableHeader: "Today", isTodayTable: true },
+          { tableHeader: "Today" },
           {
             tableHeader: "Backlog",
             emptyPrompt: "No tasks here. Start typing to add some!",

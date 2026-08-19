@@ -5,12 +5,10 @@ import TaskTable from "./TaskTable";
 import type TaskDto from "../../types/taskDto";
 import useTasks from "../hooks/useTasks";
 import { move } from "@dnd-kit/helpers";
-
-type Group = "Today" | "Backlog";
+import { type TaskTableHeadersType } from "../types/taskTableHeaders";
 
 interface TableConfig {
-  tableHeader: Group;
-  isTodayTable?: boolean;
+  tableHeader: TaskTableHeadersType;
   emptyPrompt?: string;
 }
 
@@ -18,10 +16,11 @@ interface Props {
   tables: TableConfig[];
 }
 
-function groupItems(tasks: TaskDto[]): Record<Group, TaskDto[]> {
+function groupItems(tasks: TaskDto[]): Record<TaskTableHeadersType, TaskDto[]> {
   return {
     Today: tasks.filter((t) => !t.isCompleted && t.isToday),
     Backlog: tasks.filter((t) => !t.isCompleted && !t.isToday),
+    Done: tasks.filter((t) => t.isCompleted),
   };
 }
 
@@ -41,7 +40,10 @@ export default function TaskTableList({ tables }: Props) {
   return (
     <DragDropProvider
       onDragOver={(event) => {
-        setItems((items) => move(items, event) as Record<Group, TaskDto[]>);
+        setItems(
+          (items) =>
+            move(items, event) as Record<TaskTableHeadersType, TaskDto[]>,
+        );
       }}
       onDragEnd={(event) => {
         if (event.canceled) {
@@ -60,6 +62,7 @@ export default function TaskTableList({ tables }: Props) {
         reorderTasks([
           ...items.Today.map((t) => t.id),
           ...items.Backlog.map((t) => t.id),
+          ...items.Done.map((t) => t.id),
         ]);
       }}
     >
@@ -68,7 +71,6 @@ export default function TaskTableList({ tables }: Props) {
           key={table.tableHeader}
           tableHeader={table.tableHeader}
           tasks={items[table.tableHeader]}
-          isTodayTable={table.isTodayTable}
           prompt={table.emptyPrompt}
         />
       ))}

@@ -9,29 +9,24 @@ import TasksDonutChart from "./TasksDonutChart";
 import { useState } from "react";
 import ChevronRightIcon from "../../assets/icons/chevron-right.svg?react";
 import ChevronDownIcon from "../../assets/icons/chevron-down.svg?react";
+import { TaskTableHeaders } from "../types/taskTableHeaders";
 
 interface Props {
   tableHeader: string;
   tasks: TaskDto[];
-  isTodayTable?: boolean;
   prompt?: string;
 }
 
-export default function TaskTable({
-  tableHeader,
-  tasks,
-  isTodayTable = false,
-  prompt,
-}: Props) {
+export default function TaskTable({ tableHeader, tasks, prompt }: Props) {
   const { toggleToday, toggleCompleted } = useTasks();
   const [isCollapsed, setIsCollapsed] = useState(false);
+  const isTodayTable = tableHeader === TaskTableHeaders[0];
 
-  const incompleteTasks = tasks.filter((t) => !t.isCompleted);
-  const totalProgress = incompleteTasks.reduce(
+  const totalProgress = tasks.reduce(
     (sum, task) => sum + (task.estimate !== undefined ? task.progress || 0 : 0),
     0,
   );
-  const totalEstimate = incompleteTasks.reduce(
+  const totalEstimate = tasks.reduce(
     (sum, task) => sum + (task.estimate || 0),
     0,
   );
@@ -59,7 +54,7 @@ export default function TaskTable({
           <div className="flex flex-row items-center gap-4 text-primary">
             <ProgressBar progress={totalProgress} max={totalEstimate} />
             <p>{durationAsString(totalEstimate)}</p>
-            <TasksDonutChart size={12} tasks={incompleteTasks} />
+            <TasksDonutChart size={12} tasks={tasks} />
           </div>
         </div>
         {/* Table Rows */}
@@ -67,7 +62,7 @@ export default function TaskTable({
           className={`grid transition-[grid-template-rows] duration-500 ease-in-out ${isCollapsed ? "grid-rows-[0fr]" : "grid-rows-[1fr]"}`}
         >
           <div className="overflow-hidden min-h-0">
-            {incompleteTasks.map((task, index) => (
+            {tasks.map((task, index) => (
               <Sortable
                 key={task.id}
                 id={task.id}
@@ -85,9 +80,9 @@ export default function TaskTable({
               </Sortable>
             ))}
             {/* Prompt (if empty, and provided) */}
-            {incompleteTasks.length == 0 && prompt && (
+            {tasks.length == 0 && prompt && (
               <p className="w-full text-text/50 text-xl text-center p-4">
-                No tasks yet. Start typing to add some!
+                {prompt}
               </p>
             )}
           </div>

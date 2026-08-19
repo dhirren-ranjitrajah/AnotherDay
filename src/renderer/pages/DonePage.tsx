@@ -1,18 +1,13 @@
 import TaskTableList from "../components/TaskTableList";
 
-function TodayPage() {
+export default function DonePage() {
   return (
     <section className="bg-background">
       <TaskTableList
         tables={[
-          {
-            tableHeader: "Today",
-            emptyPrompt: "No tasks here. Start typing to add some!",
-          },
+          { tableHeader: "Done", emptyPrompt: "No completed tasks yet!" },
         ]}
       />
     </section>
   );
 }
-
-export default TodayPage;
