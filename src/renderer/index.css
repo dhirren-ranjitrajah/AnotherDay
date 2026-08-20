@@ -17,6 +17,10 @@
 }
 
 @layer base {
+  *:focus-visible {
+    @apply outline-none;
+  }
+
   div {
     @apply transition-colors duration-300;
   }

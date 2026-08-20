@@ -34,7 +34,10 @@ export default function MainLayout() {
   return (
     <div className="flex h-screen w-full flex-row bg-background transition-none">
       <Navbar />
-      <main className="flex-1 min-h-0 overflow-y-auto styled-scrollbar">
+      <main
+        tabIndex={-1}
+        className="flex-1 min-h-0 overflow-y-auto styled-scrollbar"
+      >
         <Outlet />
       </main>
       {isTaskModalOpen && <AddTaskModal />}
