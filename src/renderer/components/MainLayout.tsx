@@ -4,8 +4,10 @@ import Navbar from "./Navbar";
 import AddTaskModal from "./AddTaskModal";
 import useTaskModal from "../hooks/useTaskModal";
 import useNavigationHelper from "../hooks/useNavigationHelper";
+import useTasks from "../hooks/useTasks";
 
 export default function MainLayout() {
+  const { isLoading } = useTasks();
   const { addTask, isTaskModalOpen } = useTaskModal();
   const { navigateHome, navigateNext, navigatePrev } = useNavigationHelper();
 
@@ -30,6 +32,8 @@ export default function MainLayout() {
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [addTask, isTaskModalOpen, navigateHome, navigateNext, navigatePrev]);
+
+  if (isLoading) return null;
 
   return (
     <div className="flex h-screen w-full flex-row bg-background transition-none">
