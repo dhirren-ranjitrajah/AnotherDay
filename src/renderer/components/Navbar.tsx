@@ -22,8 +22,8 @@ export default function Navbar() {
     "absolute top-0 right-0 w-3 h-4 leading-4 bg-error/90 rounded-sm text-center text-sm font-bold";
 
   return (
-    <div className="group top-0 left-0 bottom-0 h-full py-4 z-10 w-16 hover:w-40 transition-all duration-400 bg-background-lowered/50">
-      <nav className="flex flex-col h-full gap-4 border-r-4 border-background-lowered p-4 duration-400">
+    <div className="group top-0 left-0 bottom-0 h-full py-4 z-10 w-16 hover:w-40 transition-[width] duration-400 bg-background-lowered/50">
+      <nav className="flex flex-col h-full gap-4 p-4 text-text border-r-4 border-background-lowered duration-400">
         <NavLink
           to="/"
           tabIndex={-1}
