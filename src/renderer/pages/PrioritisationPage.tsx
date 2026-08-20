@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import useTasks from "../hooks/useTasks";
 import usePriorityStore from "../store/priorityStore";
 import useTaskModal from "../hooks/useTaskModal";
@@ -15,14 +15,17 @@ export default function PrioritisationPage() {
     .filter((t) => !t.priority && !t.isCompleted)
     .sort((a, b) => a.id - b.id);
 
-  const catalogCurrentTask = (priorityIndex: number) => {
-    if (prioritizationQueue.length === 0) return;
-    const task = prioritizationQueue.at(0);
-    updateTask(task!.id, {
-      ...task,
-      priority: priorityArray[priorityIndex][0],
-    });
-  };
+  const catalogCurrentTask = useCallback(
+    (priorityIndex: number) => {
+      if (prioritizationQueue.length === 0) return;
+      const task = prioritizationQueue.at(0);
+      updateTask(task!.id, {
+        ...task,
+        priority: priorityArray[priorityIndex][0],
+      });
+    },
+    [prioritizationQueue, priorityArray, updateTask],
+  );
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {

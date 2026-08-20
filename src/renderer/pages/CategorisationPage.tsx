@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import useTasks from "../hooks/useTasks";
 import TaskCarousel from "../components/TaskCarousel";
 import useCategoryStore from "../store/categoryStore";
@@ -15,14 +15,17 @@ export default function CategorisationPage() {
     .filter((t) => !t.category && !t.isCompleted)
     .sort((a, b) => a.id - b.id);
 
-  const catalogCurrentTask = (categorisationIdx: number) => {
-    if (categorisationQueue.length === 0) return;
-    const task = categorisationQueue.at(0);
-    updateTask(task!.id, {
-      ...task,
-      category: categoryArray[categorisationIdx][0],
-    });
-  };
+  const catalogCurrentTask = useCallback(
+    (categorisationIdx: number) => {
+      if (categorisationQueue.length === 0) return;
+      const task = categorisationQueue.at(0);
+      updateTask(task!.id, {
+        ...task,
+        category: categoryArray[categorisationIdx][0],
+      });
+    },
+    [categorisationQueue, categoryArray, updateTask],
+  );
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
