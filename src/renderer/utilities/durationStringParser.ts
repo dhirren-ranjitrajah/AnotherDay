@@ -1,4 +1,5 @@
-export function parseDuration(s: string) {
+export function parseDuration(s?: string) {
+  if (!s) return NaN;
   let sum = 0;
   let matched = false;
 
