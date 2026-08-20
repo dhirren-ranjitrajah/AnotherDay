@@ -1,11 +1,13 @@
 import { DragDropProvider, DragOverlay } from "@dnd-kit/react";
-import { useState } from "react";
+import { DragDropManager } from "@dnd-kit/dom";
+import { useLayoutEffect, useMemo, useState } from "react";
 import TaskRow from "./TaskRow";
 import TaskTable from "./TaskTable";
 import type TaskDto from "../../types/taskDto";
 import useTasks from "../hooks/useTasks";
 import { move } from "@dnd-kit/helpers";
 import { type TaskTableHeadersType } from "../types/taskTableHeaders";
+import useTaskModal from "../hooks/useTaskModal";
 
 interface TableConfig {
   tableHeader: TaskTableHeadersType;
@@ -26,6 +28,8 @@ function groupItems(tasks: TaskDto[]): Record<TaskTableHeadersType, TaskDto[]> {
 
 export default function TaskTableList({ tables }: Props) {
   const { tasks, isLoading, toggleToday, reorderTasks } = useTasks();
+  const { isTaskModalOpen } = useTaskModal();
+  const manager = useMemo(() => new DragDropManager(), []);
 
   const [items, setItems] = useState(() => groupItems(tasks));
   const [prevTasks, setPrevTasks] = useState(tasks);
@@ -35,10 +39,17 @@ export default function TaskTableList({ tables }: Props) {
     setItems(groupItems(tasks));
   }
 
+  useLayoutEffect(() => {
+    if (isTaskModalOpen) {
+      manager.actions.stop({ canceled: true });
+    }
+  }, [isTaskModalOpen, manager]);
+
   if (isLoading) return null;
 
   return (
     <DragDropProvider
+      manager={manager}
       onDragOver={(event) => {
         setItems(
           (items) =>
@@ -74,13 +85,15 @@ export default function TaskTableList({ tables }: Props) {
           prompt={table.emptyPrompt}
         />
       ))}
-      <DragOverlay>
-        {(source) => (
-          <div className="outline outline-primary/50 rounded-lg">
-            <TaskRow task={source.data as TaskDto} />
-          </div>
-        )}
-      </DragOverlay>
+      {
+        <DragOverlay>
+          {(source) => (
+            <div className="outline outline-primary/50 rounded-lg">
+              <TaskRow task={source.data as TaskDto} />
+            </div>
+          )}
+        </DragOverlay>
+      }
     </DragDropProvider>
   );
 }
