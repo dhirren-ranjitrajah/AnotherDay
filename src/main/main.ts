@@ -25,7 +25,7 @@ function createWindow() {
     webPreferences: {
       preload: path.join(__dirname, "preload.mjs"),
     },
-    icon: path.join(__dirname, "../src/assets/icons/favicon.png"),
+    icon: path.join(__dirname, "../dist/assets/icons/favicon.png"),
     backgroundColor: "#111111",
   });
 

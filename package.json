@@ -6,7 +6,7 @@
     "name": "Dhirren Ranjit Rajah"
   },
   "licence": "MIT",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "type": "module",
   "main": "dist-electron/main.js",
   "desktopName": "com.dhirren.AnotherDay",
@@ -20,6 +20,7 @@
   "build": {
     "appId": "com.dhirren.AnotherDay",
     "productName": "AnotherDay",
+    "icon": "public/assets/icons/favicon.png",
     "files": [
       "dist/**/*",
       "dist-electron/**/*"
@@ -28,14 +29,12 @@
       "output": "release"
     },
     "win": {
-      "icon": "src/assets/icons/favicon.ico",
       "target": [
         "nsis",
         "portable"
       ]
     },
     "linux": {
-      "icon": "src/assets/icons/favicon.png",
       "target": [
         "AppImage",
         "deb"
