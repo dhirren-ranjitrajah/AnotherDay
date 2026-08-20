@@ -2,6 +2,7 @@ import { NavLink } from "react-router-dom";
 import HomeIcon from "../../assets/icons/home.svg?react";
 import BacklogIcon from "../../assets/icons/list.svg?react";
 import PrioritisationIcon from "../../assets/icons/crosshair.svg?react";
+import CategorisationIcon from "../../assets/icons/filter.svg?react";
 import CompletedIcon from "../../assets/icons/check.svg?react";
 import useTasks from "../hooks/useTasks";
 
@@ -53,7 +54,21 @@ export default function Navbar() {
               <p className={notificationClass}>!</p>
             )}
           </div>
-
+          <p className={navLinkTextClass}>Prioritise</p>
+        </NavLink>
+        <NavLink
+          to="/categorisation"
+          tabIndex={-1}
+          className={({ isActive }) =>
+            navLinkClass + (isActive ? " text-primary" : "")
+          }
+        >
+          <div className="relative">
+            <CategorisationIcon className={iconClass + " relative"} />
+            {tasks.filter((t) => !t.isCompleted && !t.category).length > 0 && (
+              <p className={notificationClass}>!</p>
+            )}
+          </div>
           <p className={navLinkTextClass}>Prioritise</p>
         </NavLink>
         <NavLink
