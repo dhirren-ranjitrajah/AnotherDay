@@ -3,7 +3,6 @@ import { useNavigate, useLocation } from "react-router-dom";
 const Navigation_Route_Cycle = [
   "/",
   "/backlog",
-  "/estimation",
   "/categorisation",
   "/prioritisation",
   "/done",

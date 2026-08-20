@@ -7,7 +7,6 @@ import TaskModalProvider from "./context/TaskModalProvider";
 import DonePage from "./pages/DonePage";
 import PrioritisationPage from "./pages/PrioritisationPage";
 import CategorisationPage from "./pages/CategorisationPage";
-import EstimationPage from "./pages/EstimationPage";
 
 export default function App() {
   return (
@@ -18,7 +17,6 @@ export default function App() {
             <Route element={<MainLayout />}>
               <Route path="/" element={<TodayPage />} />
               <Route path="/backlog" element={<BacklogPage />} />
-              <Route path="/estimation" element={<EstimationPage />} />
               <Route path="/categorisation" element={<CategorisationPage />} />
               <Route path="/prioritisation" element={<PrioritisationPage />} />
               <Route path="/done" element={<DonePage />} />

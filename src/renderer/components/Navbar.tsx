@@ -4,7 +4,6 @@ import BacklogIcon from "../../assets/icons/list.svg?react";
 import PrioritisationIcon from "../../assets/icons/crosshair.svg?react";
 import CategorisationIcon from "../../assets/icons/filter.svg?react";
 import CompletedIcon from "../../assets/icons/check.svg?react";
-import EstimationIcon from "../../assets/icons/clock.svg?react";
 import useTasks from "../hooks/useTasks";
 
 function NavbarDivider() {
@@ -47,21 +46,6 @@ export default function Navbar() {
           <p className={navLinkTextClass}>Backlog</p>
         </NavLink>
         <NavbarDivider />
-        <NavLink
-          to="/estimation"
-          tabIndex={-1}
-          className={({ isActive }) =>
-            navLinkClass + (isActive ? " text-primary" : "")
-          }
-        >
-          <div className="relative">
-            <EstimationIcon className={iconClass + " relative"} />
-            {tasks.filter((t) => !t.isCompleted && !t.estimate).length > 0 && (
-              <p className={notificationClass}>!</p>
-            )}
-          </div>
-          <p className={navLinkTextClass}>Estimate</p>
-        </NavLink>
         <NavLink
           to="/categorisation"
           tabIndex={-1}
