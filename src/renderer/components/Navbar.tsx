@@ -4,7 +4,12 @@ import BacklogIcon from "../../assets/icons/list.svg?react";
 import PrioritisationIcon from "../../assets/icons/crosshair.svg?react";
 import CategorisationIcon from "../../assets/icons/filter.svg?react";
 import CompletedIcon from "../../assets/icons/check.svg?react";
+import EstimationIcon from "../../assets/icons/clock.svg?react";
 import useTasks from "../hooks/useTasks";
+
+function NavbarDivider() {
+  return <div className="w-full h-0.5 bg-background-raised" />;
+}
 
 export default function Navbar() {
   const { tasks } = useTasks();
@@ -41,6 +46,37 @@ export default function Navbar() {
           <BacklogIcon className={iconClass} />
           <p className={navLinkTextClass}>Backlog</p>
         </NavLink>
+        <NavbarDivider />
+        <NavLink
+          to="/estimation"
+          tabIndex={-1}
+          className={({ isActive }) =>
+            navLinkClass + (isActive ? " text-primary" : "")
+          }
+        >
+          <div className="relative">
+            <EstimationIcon className={iconClass + " relative"} />
+            {tasks.filter((t) => !t.isCompleted && !t.estimate).length > 0 && (
+              <p className={notificationClass}>!</p>
+            )}
+          </div>
+          <p className={navLinkTextClass}>Estimate</p>
+        </NavLink>
+        <NavLink
+          to="/categorisation"
+          tabIndex={-1}
+          className={({ isActive }) =>
+            navLinkClass + (isActive ? " text-primary" : "")
+          }
+        >
+          <div className="relative">
+            <CategorisationIcon className={iconClass + " relative"} />
+            {tasks.filter((t) => !t.isCompleted && !t.category).length > 0 && (
+              <p className={notificationClass}>!</p>
+            )}
+          </div>
+          <p className={navLinkTextClass}>Categorise</p>
+        </NavLink>
         <NavLink
           to="/prioritisation"
           tabIndex={-1}
@@ -56,21 +92,7 @@ export default function Navbar() {
           </div>
           <p className={navLinkTextClass}>Prioritise</p>
         </NavLink>
-        <NavLink
-          to="/categorisation"
-          tabIndex={-1}
-          className={({ isActive }) =>
-            navLinkClass + (isActive ? " text-primary" : "")
-          }
-        >
-          <div className="relative">
-            <CategorisationIcon className={iconClass + " relative"} />
-            {tasks.filter((t) => !t.isCompleted && !t.category).length > 0 && (
-              <p className={notificationClass}>!</p>
-            )}
-          </div>
-          <p className={navLinkTextClass}>Prioritise</p>
-        </NavLink>
+        <NavbarDivider />
         <NavLink
           to="/done"
           tabIndex={-1}
