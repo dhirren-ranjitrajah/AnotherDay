@@ -1,9 +1,15 @@
 {
-  "name": "electron_planner",
-  "private": true,
-  "version": "0.0.0",
+  "name": "another-day",
+  "description": "An Electron-based daily backlog manager and time-tracking solution",
+  "author": {
+    "email": "d.ranjitrajah@gmail.com",
+    "name": "Dhirren Ranjit Rajah"
+  },
+  "licence": "MIT",
+  "version": "0.1.0",
   "type": "module",
   "main": "dist-electron/main.js",
+  "desktopName": "com.dhirren.AnotherDay",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
@@ -12,14 +18,29 @@
     "dist": "npm run build && electron-builder"
   },
   "build": {
-    "appId": "com.electronplanner.app",
-    "productName": "Electron Planner",
+    "appId": "com.dhirren.AnotherDay",
+    "productName": "AnotherDay",
     "files": [
       "dist/**/*",
       "dist-electron/**/*"
     ],
     "directories": {
       "output": "release"
+    },
+    "win": {
+      "icon": "src/assets/icons/favicon.ico",
+      "target": [
+        "nsis",
+        "portable"
+      ]
+    },
+    "linux": {
+      "icon": "src/assets/icons/favicon.png",
+      "target": [
+        "AppImage",
+        "deb"
+      ],
+      "category": "Utility"
     }
   },
   "dependencies": {
