@@ -22,12 +22,17 @@ export default function DonutChart({ size, elements }: Props) {
     elements.map((e) => [e, totalValue ? (e.value / totalValue) * 100 : 0]),
   );
 
-  let cumulative = 0;
+  const cumulativePercentages = new Map<PieChartElementData, number>();
+  elements.reduce((cumulative, e) => {
+    cumulativePercentages.set(e, cumulative);
+    return cumulative + (percentages.get(e) ?? 0);
+  }, 0);
+
   const segments = elements.map((e) => {
     const percent = percentages.get(e) ?? 0;
+    const cumulative = cumulativePercentages.get(e) ?? 0;
     const dasharray = `${(percent / 100) * Circumference} ${Circumference}`;
     const dashoffset = -((cumulative / 100) * Circumference);
-    cumulative += percent;
 
     return (
       <circle
